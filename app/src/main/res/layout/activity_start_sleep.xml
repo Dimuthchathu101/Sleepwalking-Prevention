@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StartSleep">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <!-- Contents of the inner LinearLayout here -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sleep Safe"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Step Counter TextView -->
+        <Button
+            android:id="@+id/starttracking"
+            android:layout_width="130dp"
+            android:layout_height="124dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:gravity="center"
+            android:text="start"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/txtstepconter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Step Count: 0"
+            android:textSize="24sp"
+            android:textColor="@color/purple"
+            android:gravity="center" />
+
+        <!-- Step Detector TextView -->
+        <TextView
+            android:id="@+id/txtStepDetector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Step Detector: 0"
+            android:textSize="18sp"
+            android:gravity="center" />
+
+        <!-- Add a decorative horizontal line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/purple"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -59,10 +59,10 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username"
+                android:id="@+id/loginemail"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
-                android:hint="Enter User Name"
+                android:hint="Enter Email"
                 android:textStyle="italic"
                 android:padding="8dp"
                 android:textColor="@color/black"
@@ -120,7 +120,7 @@
     <Button
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:id="@+id/loginButton"
+        android:id="@+id/loginSignUp"
         android:text="Sign Up"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
