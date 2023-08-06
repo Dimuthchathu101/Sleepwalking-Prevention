@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/suggestionnew"
+                android:id="@+id/suggestion04"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:text="Suggestion 04"
