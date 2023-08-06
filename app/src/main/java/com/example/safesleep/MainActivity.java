@@ -235,7 +235,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveToSleepwalkerHome() {
-        Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
+//        Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
+//        startActivity(intent);
+//        finish();
+        Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
         startActivity(intent);
         finish();
     }

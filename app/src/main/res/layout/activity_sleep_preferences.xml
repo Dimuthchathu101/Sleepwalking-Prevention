@@ -112,6 +112,12 @@
             android:visibility="invisible"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purple"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -169,6 +175,12 @@
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purple"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
     <ImageView
         android:src="@drawable/dreams"
         android:layout_width="140dp"
@@ -176,13 +188,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/navigatebackbutton"
-        android:text="Go Back"
 
-        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -220,7 +226,13 @@
         android:textStyle="bold"
         />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigatebackbutton"
+        android:text="Go Back"
+        android:layout_marginTop="20dp"
+        />
 
 
 

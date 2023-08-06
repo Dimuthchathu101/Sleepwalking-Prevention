@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,8 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -43,6 +47,8 @@ public class SleepPreferences extends AppCompatActivity {
     private TextView tvSelectedAwake;
     private Calendar calendar;
     private EditText etcaretakerMobile, etcaretakerEmail;
+
+    private TextView tvCaretakerMobile, tvCaretakerEmail;
     
 
     Button goBackButton, updatePreferences;
@@ -53,6 +59,7 @@ public class SleepPreferences extends AppCompatActivity {
     DatabaseReference caretakerEmailFirebase= database.getReference("caretakeremail");
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,8 @@ public class SleepPreferences extends AppCompatActivity {
         tvSelectedDate = findViewById(R.id.tvSelectedDate);
         tvSelectedTime = findViewById(R.id.tvSelectedTime);
         tvSelectedAwake = findViewById(R.id.tvEndTime);
+        tvCaretakerEmail = findViewById(R.id.caretakeremailfirebase);
+        tvCaretakerMobile = findViewById(R.id.caretakermobilefirebase);
 
         etcaretakerEmail = findViewById(R.id.caretakeremail);
         caretakerEmail = String.valueOf(etcaretakerEmail.getText());
@@ -83,7 +92,37 @@ public class SleepPreferences extends AppCompatActivity {
             }
         });
 
-       
+        caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                tvCaretakerMobile.setText("Current Caretaker Number: "+value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
+        caretakerEmailFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                tvCaretakerEmail.setText("Current Caretaker Number: "+value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
 
 
 

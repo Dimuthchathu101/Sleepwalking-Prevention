@@ -8,12 +8,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/purple"
     tools:context=".DoctorHomeActivity"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="10dp"
+    android:background="@color/purple_200"
     >
 
+    <!-- Your first CardView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,16 +30,16 @@
             android:layout_gravity="center_horizontal"
             android:padding="5dp">
 
-
+            <!-- Your TextViews inside the first CardView -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Alerts"
                 android:id="@+id/Alerts"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:textColor="@color/purple"/>
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -50,8 +51,7 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="30dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,12 +63,12 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="20dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Your second CardView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,15 +84,17 @@
             android:layout_gravity="center_horizontal"
             android:padding="5dp">
 
+            <!-- Your TextViews inside the second CardView -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Notifications"
                 android:id="@+id/homeScreen"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:textColor="@color/purple"/>
+                android:textColor="@color/black"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -103,8 +105,7 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="30dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,22 +117,35 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="20dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <!-- Your Buttons -->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/doctorRecords"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:id="@+id/loginButton"
+        android:layout_marginTop="5dp"
         android:text="Records"
         android:textSize="18sp"
-        android:layout_marginTop="5dp"
         android:backgroundTint="@color/light_blue"
-        android:background="@color/light_blue"
-        app:cornerRadius="50dp"/>
+        app:cornerRadius="30dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/doctorPatients"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:text="Patients"
+        android:textSize="18sp"
+        android:backgroundTint="@color/light_blue"
+        app:cornerRadius="30dp"
+        />
+
 
 
 </LinearLayout>
