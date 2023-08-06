@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Permission to access accelerometer sensor -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.BODY_SENSORS" /> <!-- Microphone permission -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- Storage permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,6 +17,11 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" /> <!-- Foreground Service permission (required from Android 10 and later) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -25,10 +34,32 @@
         android:theme="@style/Theme.SafeSleep"
         tools:targetApi="31">
         <activity
-            android:name=".StartSleep"
-            android:exported="false" >
+            android:name=".GraphActivity"
+            android:exported="false" />
 
-        </activity>
+        <service android:name=".SleepRecords" />
+
+        <activity
+            android:name=".AutomaticCallActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SleepPreferences"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SleepRecords"
+            android:exported="false" />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartSleep"
+            android:exported="false" />
         <activity
             android:name=".DoctorHomeActivity"
             android:exported="false" />
@@ -40,7 +71,7 @@
             android:exported="false" />
         <activity
             android:name=".RegisterScreen"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,9 +80,12 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
+            android:exported="false" />
 
-        </activity>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".SleepPreferences">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sleep Preferences"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="30sp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            />
+        <Button
+            android:textSize="16sp"
+            android:id="@+id/btnPickDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Date"
+            android:onClick="showDatePicker"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:id="@+id/tvSelectedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Date: "
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Sleep Starts At: "
+            android:textSize="16sp"
+            />
+        <Button
+            android:id="@+id/btnPickTime"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:text="Pick Time"
+            android:textSize="16sp"
+            android:onClick="showTimePicker" />
+
+        <TextView
+
+            android:id="@+id/tvSelectedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Time: "
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Sleep Ends At: "
+            android:id="@+id/sleepends"
+            android:textSize="16sp"
+            />
+        <Button
+            android:textSize="16sp"
+            android:id="@+id/btnEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Time"
+            android:onClick="showTimePickerAwake"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:id="@+id/tvEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selected Time: "
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Caretaker Details"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="27sp"
+        android:layout_marginTop="15dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Caretaker Mobile Number"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:id="@+id/caretakermobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Caretakers Mobile Numer"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        />
+
+<!--caretaker email-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Caretaker Email"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Caretakers Email Address"
+        android:textStyle="italic"
+        android:id="@+id/caretakeremail"
+        android:textSize="16sp"
+        />
+    <Button
+        android:id="@+id/btnPreferncesupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        />
+    <ImageView
+        android:src="@drawable/dreams"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigatebackbutton"
+        android:text="Go Back"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Details"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Caretaker Email"
+        android:id="@+id/caretakeremailfirebase"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        />
+
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Caretaker Number"
+        android:id="@+id/caretakermobilefirebase"
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        />
+
+
+
+
+
+</LinearLayout>

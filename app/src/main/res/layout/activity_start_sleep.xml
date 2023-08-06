@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".StartSleep">
 
+    <Button
+        android:id="@+id/navigatebackstartsleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="1dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,13 +27,14 @@
 
         <!-- Contents of the inner LinearLayout here -->
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sleep Safe"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -31,11 +43,37 @@
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sleeping Time (Hours)"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editTextBedTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Your Bed Time"
+                android:inputType="time"
+                android:textStyle="italic"
+                android:textColor="#808080" />
+
+        </LinearLayout>
 
         <!-- Step Counter TextView -->
         <Button
@@ -48,7 +86,8 @@
             android:gravity="center"
             android:text="start"
             android:textColor="@color/white"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            />
 
         <TextView
             android:id="@+id/txtstepconter"
@@ -60,23 +99,58 @@
             android:gravity="center" />
 
         <!-- Step Detector TextView -->
-        <TextView
-            android:id="@+id/txtStepDetector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Step Detector: 0"
-            android:textSize="18sp"
-            android:gravity="center" />
-
-        <!-- Add a decorative horizontal line -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/purple"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
+        <!-- Add a decorative horizontal line -->
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textSleepAwake"
+            android:hint="Sleepwalking Time"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Awake Me"
+            android:layout_marginTop="15dp"
+            android:id="@+id/btnAwake"
+            />
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/purple"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recent Records"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="20dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

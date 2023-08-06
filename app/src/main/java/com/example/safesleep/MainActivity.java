@@ -106,6 +106,8 @@ package com.example.safesleep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -122,6 +124,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -167,7 +171,26 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+//        Intent serviceIntent = new Intent(this, SleepRecords.class);
+//        startService(serviceIntent);
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//
+//        // Set alarm for 10 AM
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, 10);
+//        calendar.set(Calendar.MINUTE, 0);
+//        calendar.set(Calendar.SECOND, 0);
+//
+//        // Intent to trigger broadcast receiver
+//        Intent intent = new Intent(this, StartMonitoringReceiver.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+//
+//        // Set repeating alarm
+//        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
+
 
     private void loginUser() {
         String email = loginEmail.getText().toString().trim();
