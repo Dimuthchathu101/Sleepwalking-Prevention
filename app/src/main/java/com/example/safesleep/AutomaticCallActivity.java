@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +40,19 @@ public class AutomaticCallActivity extends AppCompatActivity {
         } else {
             makeCall();
         }
+
+        Button goBackButton = findViewById(R.id.navigatebackautomatedcall);
+        goBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to SleepPreferences activity
+                Intent intent = new Intent(AutomaticCallActivity.this, DoctorHomeActivity.class);
+                startActivity(intent);
+
+                // Finish the current activity
+                finish();
+            }
+        });
     }
 
     private void makeCall() {

@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="70dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:id="@+id/search"
@@ -18,6 +18,7 @@
         app:searchHintIcon="@null"
         app:queryHint="Search..."
         android:focusable="false"
+        android:layout_marginLeft="40dp"
 />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,19 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
         android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/navigatebacksleeprecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

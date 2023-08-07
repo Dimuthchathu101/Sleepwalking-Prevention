@@ -26,7 +26,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
 
     TextView tvsuggestion01, tvSuggestion2, tvsuggestion03, tvSuggestion04;
 
-    Button btnPatients, btnRecords;
+    Button btnPatients, btnRecords, doctorSuggestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
 //        tvSuggestion4 = findViewById(R.id.suggest);
         btnPatients = findViewById(R.id.doctorPatients);
         btnRecords = findViewById(R.id.doctorRecords);
+        doctorSuggestions = findViewById(R.id.doctorSuggestions);
 
         sleepTime.addValueEventListener(new ValueEventListener() {
             @Override
@@ -121,6 +122,15 @@ public class DoctorHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), DoctorRecords.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        doctorSuggestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DoctorSuggestions.class);
                 startActivity(intent);
                 finish();
             }

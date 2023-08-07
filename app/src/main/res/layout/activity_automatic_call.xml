@@ -38,5 +38,17 @@
         android:gravity="center"
         android:textStyle="bold"
         />
+    <Button
+        android:id="@+id/navigatebackautomatedcall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        />
 
 </LinearLayout>

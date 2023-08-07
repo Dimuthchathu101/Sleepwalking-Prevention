@@ -41,7 +41,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/username"
+                android:id="@+id/usernamedoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Enter User Name"
@@ -54,7 +54,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/email"
+                android:id="@+id/emaildoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Enter Email"
@@ -68,7 +68,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/qualifications"
+                android:id="@+id/qualificationsdoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Enter Qualifications"
@@ -81,7 +81,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/smlcRegistration"
+                android:id="@+id/smlcRegistrationdoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Enter SLMC Registration"
@@ -94,7 +94,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/password"
+                android:id="@+id/passworddoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Enter Password"
@@ -108,7 +108,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/confirmPassword"
+                android:id="@+id/confirmPasswordDoctor"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Confirm Password"
@@ -123,7 +123,7 @@
             <Button
                 android:layout_width="120dp"
                 android:layout_height="60dp"
-                android:id="@+id/signupButton"
+                android:id="@+id/signupButtonDoctor"
                 android:text="Sign Up"
                 android:textSize="18sp"
                 android:layout_marginTop="25dp"

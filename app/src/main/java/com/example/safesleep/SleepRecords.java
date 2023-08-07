@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -111,6 +112,19 @@ public void onDataChange(@NonNull DataSnapshot snapshot) {
             public void onClick(View view) {
                 Intent intent = new Intent(SleepRecords.this, UploadActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button goBackButton = findViewById(R.id.navigatebacksleeprecords);
+        goBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to SleepPreferences activity
+                Intent intent = new Intent(SleepRecords.this, DoctorHomeActivity.class);
+                startActivity(intent);
+
+                // Finish the current activity
+                finish();
             }
         });
     }

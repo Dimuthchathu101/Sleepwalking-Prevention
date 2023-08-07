@@ -56,7 +56,7 @@ public class DoctorRecords extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Navigate to SleepPreferences activity
-                        Intent intent = new Intent(DoctorRecords.this, SleepwalkerHome.class);
+                        Intent intent = new Intent(DoctorRecords.this, DoctorHomeActivity.class);
                         startActivity(intent);
 
                         // Finish the current activity

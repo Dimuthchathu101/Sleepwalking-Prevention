@@ -48,7 +48,7 @@
                 android:id="@+id/uploadTopic"
                 android:layout_marginTop="16dp"
                 android:padding="12dp"
-                android:hint="Enter topic name"
+                android:hint="Enter Patient Name"
                 android:textColor="@color/light_green"/>
 
             <EditText
@@ -57,7 +57,7 @@
                 android:id="@+id/uploadDesc"
                 android:layout_marginTop="16dp"
                 android:padding="12dp"
-                android:hint="Enter description"
+                android:hint="Enter Pateint Description"
                 android:textColor="@color/light_green"/>
 
             <EditText
