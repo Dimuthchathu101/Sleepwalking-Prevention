@@ -1,9 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
     tools:context=".DoctorSuggestions">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dimuth Bandara"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="27sp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/purple"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Suggested Sleep Time"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:id="@+id/suggestedsleep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Suggested Sleep Time"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        />
+
+    <!--caretaker email-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Suggested Awake Time"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Suggested Awake Time"
+        android:textStyle="italic"
+        android:id="@+id/suggestedawake"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Scheduled Awakening Time"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Scheduled Awakening"
+        android:textStyle="italic"
+        android:id="@+id/suggestedscheduledawake"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Your Recomendations"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Suggested Awake Time"
+        android:textStyle="italic"
+        android:id="@+id/doctorrecomendations"
+        android:textSize="16sp"
+        />
+    <Button
+        android:id="@+id/btndoctorupdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Details"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_marginTop="15dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="current sleep time"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:id="@+id/suggestionstxtsleeptime"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="current awake"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:id="@+id/suggestioncurrentawake"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="current schedule awake"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:id="@+id/suggestioncurrentwalk"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Current Recomendations"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:id="@+id/suggestedcurrentrecomendations"
+        />
+
+    <Button
+        android:id="@+id/navigatebackdoctorsugg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        />
+
+</LinearLayout>

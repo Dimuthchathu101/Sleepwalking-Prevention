@@ -307,6 +307,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 sleepAwakeing.setTextSize(18);
 
                 Toast.makeText(StartSleep.this, " Awakeing Time: " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+
                 DatabaseReference myRef = database.getReference("scheduledawakening");
                 myRef.setValue(timeBeforeMedian);
                         btnAwake.setOnClickListener(new View.OnClickListener() {
