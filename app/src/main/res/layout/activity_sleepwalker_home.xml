@@ -12,6 +12,18 @@
     android:layout_marginTop="20dp"
     android:layout_marginBottom="10dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sleep Safe"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,7 +107,7 @@
 
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="60dp"
         android:id="@+id/sleepwpreferences"
         android:text="Preferences"
@@ -106,10 +118,10 @@
         app:cornerRadius="50dp"/>
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="60dp"
         android:id="@+id/sleepRecords"
-        android:text="Records"
+        android:text="Sleep and Details"
         android:textSize="18sp"
         android:layout_marginTop="5dp"
         android:backgroundTint="@android:color/holo_blue_dark"

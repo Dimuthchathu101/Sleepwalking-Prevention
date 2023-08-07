@@ -207,7 +207,7 @@ public class RegisterScreen extends AppCompatActivity {
     }
 
     private void moveToSleepwalkerHome() {
-        Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
         startActivity(intent);
         finish();
     }

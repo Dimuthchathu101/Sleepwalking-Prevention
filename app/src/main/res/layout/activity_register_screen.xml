@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:text="Sleepwalker Register"
                 android:id="@+id/registerText"
                 android:textSize="36sp"
                 android:textAlignment="center"
