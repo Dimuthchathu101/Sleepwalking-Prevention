@@ -9,6 +9,7 @@
     tools:context=".DetailActivity">
 
     <TextView
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/detailTitle"
@@ -17,7 +18,7 @@
         android:textSize="24sp"
         android:layout_gravity="center"
         android:layout_marginBottom="12dp"
-        android:textColor="@color/lavender"/>
+        android:textColor="@color/purple"/>
 
     <ImageView
         android:layout_width="400dp"
@@ -36,7 +37,7 @@
         android:layout_gravity="center"
         android:id="@+id/detailLang"
         android:textSize="18sp"
-        android:textColor="@color/lavender"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -47,7 +48,7 @@
         android:layout_gravity="center"
         android:id="@+id/detailDesc"
         android:textSize="18sp"
-        android:textColor="@color/lavender"/>
+        android:textColor="@color/black"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -100,6 +100,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -113,7 +114,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterScreen extends AppCompatActivity {
 
     EditText editEmail, editPassword, editName, editConfirmPassword; // Fix the variable name here
-    Button btnReg, regLogin;
+    Button btnReg, regLogin, docregister;
     private FirebaseAuth mAuth;
 
     @Override
@@ -131,11 +132,21 @@ public class RegisterScreen extends AppCompatActivity {
 
         btnReg = findViewById(R.id.regsignupButton);
         regLogin = findViewById(R.id.regLogin);
+        docregister = findViewById(R.id.regLoginDoctor);
 
         regLogin.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        docregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegisterDoctorActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
         btnReg.setOnClickListener(view -> {
@@ -185,15 +196,15 @@ public class RegisterScreen extends AppCompatActivity {
                     });
         });
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            moveToSleepwalkerHome();
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            moveToSleepwalkerHome();
+//        }
+//    }
 
     private void moveToSleepwalkerHome() {
         Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);

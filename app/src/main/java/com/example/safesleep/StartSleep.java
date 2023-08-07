@@ -109,7 +109,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         DatabaseReference sleeptime = database.getReference("sleeptime2");
 
 
-        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dataList = new ArrayList<>();

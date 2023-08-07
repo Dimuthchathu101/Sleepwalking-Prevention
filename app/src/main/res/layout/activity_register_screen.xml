@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/purple"
+    android:background="@color/purple_200"
     tools:context=".RegisterScreen"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="10dp"
@@ -101,7 +101,7 @@
                 android:id="@+id/regsignupButton"
                 android:text="Sign Up"
                 android:textSize="18sp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:backgroundTint="@color/light_blue"
                 android:background="@color/light_blue"
                 app:cornerRadius="50dp"
@@ -120,7 +120,9 @@
         android:id="@+id/loginText"
         android:textColor="@color/white"
         android:layout_marginBottom="5dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:backgroundTint="@color/light_green"
+        />
 
     <Button
         android:id="@+id/regLogin"
@@ -130,6 +132,31 @@
         android:background="@color/light_blue"
         android:backgroundTint="@color/light_blue"
         android:text="Log In"
+        android:textSize="18sp"
+        app:cornerRadius="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Are You a Caretaker / Doctor ? "
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:id="@+id/loginTextDoctor"
+        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/light_green"
+        />
+
+    <Button
+        android:id="@+id/regLoginDoctor"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_blue"
+        android:backgroundTint="@color/light_blue"
+        android:text="Doctor Register"
         android:textSize="18sp"
         app:cornerRadius="50dp" />
 </LinearLayout>

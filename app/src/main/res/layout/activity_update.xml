@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UpdateActivity">
+    tools:context=".UpdateActivity"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:background="@color/purple_200"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -31,7 +35,9 @@
                 android:text="Update Data"
                 android:textSize="30sp"
                 android:textAlignment="center"
-                android:textColor="@color/lavender"/>
+                android:textColor="@color/lavender"
+                android:textStyle="bold"
+                />
 
             <ImageView
                 android:layout_width="match_parent"
