@@ -107,25 +107,19 @@ public void onDataChange(@NonNull DataSnapshot snapshot) {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SleepRecords.this, UploadActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(SleepRecords.this, UploadActivity.class);
+            startActivity(intent);
         });
 
         Button goBackButton = findViewById(R.id.navigatebacksleeprecords);
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to SleepPreferences activity
-                Intent intent = new Intent(SleepRecords.this, DoctorHomeActivity.class);
-                startActivity(intent);
+        goBackButton.setOnClickListener(v -> {
+            // Navigate to SleepPreferences activity
+            Intent intent = new Intent(SleepRecords.this, DoctorHomeActivity.class);
+            startActivity(intent);
 
-                // Finish the current activity
-                finish();
-            }
+            // Finish the current activity
+            finish();
         });
     }
 

@@ -80,16 +80,13 @@ public class SleepPreferences extends AppCompatActivity {
         calendar = Calendar.getInstance();
 
         goBackButton = findViewById(R.id.navigatebackbutton);
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to SleepPreferences activity
-                Intent intent = new Intent(SleepPreferences.this, SleepwalkerHome.class);
-                startActivity(intent);
+        goBackButton.setOnClickListener(v -> {
+            // Navigate to SleepPreferences activity
+            Intent intent = new Intent(SleepPreferences.this, SleepwalkerHome.class);
+            startActivity(intent);
 
-                // Finish the current activity
-                finish();
-            }
+            // Finish the current activity
+            finish();
         });
 
         caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
@@ -127,23 +124,20 @@ public class SleepPreferences extends AppCompatActivity {
 
 
         updatePreferences = findViewById(R.id.btnPreferncesupdate);
-        updatePreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to SleepPreferences activity
+        updatePreferences.setOnClickListener(v -> {
+            // Navigate to SleepPreferences activity
 
-                String caretakerEmail = etcaretakerEmail.getText().toString();
-                String caretakerMobile = etcaretakerMobile.getText().toString();
+            String caretakerEmail = etcaretakerEmail.getText().toString();
+            String caretakerMobile = etcaretakerMobile.getText().toString();
 
-                if (isValidEmail(caretakerEmail) && isValidMobile(caretakerMobile)) {
-                    caretakerEmailFirebase.setValue(caretakerEmail);
-                    caretakerMobileFirebase.setValue(caretakerMobile);
-                } else {
-                    // Show a toast indicating invalid email or mobile format
-                    Toast.makeText(getApplicationContext(), "Invalid email or mobile format", Toast.LENGTH_SHORT).show();
-                }
-
+            if (isValidEmail(caretakerEmail) && isValidMobile(caretakerMobile)) {
+                caretakerEmailFirebase.setValue(caretakerEmail);
+                caretakerMobileFirebase.setValue(caretakerMobile);
+            } else {
+                // Show a toast indicating invalid email or mobile format
+                Toast.makeText(getApplicationContext(), "Invalid email or mobile format", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
@@ -153,18 +147,15 @@ public class SleepPreferences extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                (view1, year1, month1, dayOfMonth) -> {
+                    calendar.set(Calendar.YEAR, year1);
+                    calendar.set(Calendar.MONTH, month1);
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        String selectedDate = dateFormat.format(calendar.getTime());
-                        tvSelectedDate.setText("Selected Date: " + selectedDate);
-                        tvSelectedDate.setVisibility(View.VISIBLE);
-                    }
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    String selectedDate = dateFormat.format(calendar.getTime());
+                    tvSelectedDate.setText("Selected Date: " + selectedDate);
+                    tvSelectedDate.setVisibility(View.VISIBLE);
                 }, year, month, day);
 
         datePickerDialog.show();
@@ -175,17 +166,14 @@ public class SleepPreferences extends AppCompatActivity {
         int minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
+                (view1, hourOfDay, minute1) -> {
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute1);
 
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                        String selectedTime = timeFormat.format(calendar.getTime());
-                        tvSelectedTime.setText("Selected Time: " + selectedTime);
-                        tvSelectedTime.setVisibility(View.VISIBLE);
-                    }
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    String selectedTime = timeFormat.format(calendar.getTime());
+                    tvSelectedTime.setText("Selected Time: " + selectedTime);
+                    tvSelectedTime.setVisibility(View.VISIBLE);
                 }, hour, minute, true);
 
         timePickerDialog.show();
@@ -196,17 +184,14 @@ public class SleepPreferences extends AppCompatActivity {
         int minute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
+                (view1, hourOfDay, minute1) -> {
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    calendar.set(Calendar.MINUTE, minute1);
 
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                        String selectedTime = timeFormat.format(calendar.getTime());
-                        tvSelectedAwake.setText("Selected Time: " + selectedTime);
-                        tvSelectedAwake.setVisibility(View.VISIBLE);
-                    }
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    String selectedTime = timeFormat.format(calendar.getTime());
+                    tvSelectedAwake.setText("Selected Time: " + selectedTime);
+                    tvSelectedAwake.setVisibility(View.VISIBLE);
                 }, hour, minute, true);
 
         timePickerDialog.show();

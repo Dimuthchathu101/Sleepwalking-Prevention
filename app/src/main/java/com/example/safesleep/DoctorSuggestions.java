@@ -121,21 +121,15 @@ public class DoctorSuggestions extends AppCompatActivity {
             }
         });
 
-        btndoctorupdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String suggestion = String.valueOf(suggestedcurrentrecomendations.getText());
-                doctoradvise.setValue(" "+suggestion);
-            }
+        btndoctorupdate.setOnClickListener(view -> {
+            String suggestion = String.valueOf(suggestedcurrentrecomendations.getText());
+            doctoradvise.setValue(" "+suggestion);
         });
 //
-        navigatebackdoctorsugg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        navigatebackdoctorsugg.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
+            startActivity(intent);
+            finish();
         });
 
     }

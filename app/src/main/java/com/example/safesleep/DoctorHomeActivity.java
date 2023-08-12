@@ -109,31 +109,22 @@ public class DoctorHomeActivity extends AppCompatActivity {
             }
         });
 
-        btnPatients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SleepRecords.class);
-                startActivity(intent);
-                finish();
-            }
+        btnPatients.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SleepRecords.class);
+            startActivity(intent);
+            finish();
         });
 
-        btnRecords.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DoctorRecords.class);
-                startActivity(intent);
-                finish();
-            }
+        btnRecords.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), DoctorRecords.class);
+            startActivity(intent);
+            finish();
         });
 
-        doctorSuggestions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DoctorSuggestions.class);
-                startActivity(intent);
-                finish();
-            }
+        doctorSuggestions.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), DoctorSuggestions.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

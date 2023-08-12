@@ -140,13 +140,10 @@ public class RegisterScreen extends AppCompatActivity {
             finish();
         });
 
-        docregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterDoctorActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        docregister.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterDoctorActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         btnReg.setOnClickListener(view -> {
@@ -177,21 +174,18 @@ public class RegisterScreen extends AppCompatActivity {
             }
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegisterScreen.this, "Authentication passed",
-                                        Toast.LENGTH_SHORT).show();
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterScreen.this, "Authentication passed",
+                                    Toast.LENGTH_SHORT).show();
 
-                                // TODO: Add any additional logic after successful registration
-                                Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(RegisterScreen.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                            // TODO: Add any additional logic after successful registration
+                            Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterScreen.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
         });

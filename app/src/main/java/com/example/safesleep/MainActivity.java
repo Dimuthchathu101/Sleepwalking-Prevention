@@ -238,8 +238,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
         startActivity(intent);
         finish();
-//        Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
-//        startActivity(intent);
-//        finish();
+
     }
 }

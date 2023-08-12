@@ -178,14 +178,19 @@ public class SleepPostureActivity extends AppCompatActivity {
                                 messagesMap.put(messageKey, messageKey);
                                 DatabaseReference myRef = database.getReference("messages");
                                 myRef.child(messageKey).setValue(messageKey);
-                                Toast.makeText(SleepPostureActivity.this, "Incomplete pose data", Toast.LENGTH_SHORT).show();
-                                mediaPlayer = MediaPlayer.create(SleepPostureActivity.this, R.raw.alarm);
+//                                Toast.makeText(SleepPostureActivity.this, "Incomplete pose data", Toast.LENGTH_SHORT).show();
+//                                mediaPlayer = MediaPlayer.create(SleepPostureActivity.this, R.raw.alarm);
+
+                                DatabaseReference lastepisode = database.getReference("lastepisode");
+
+                                lastepisode.setValue(messageKey);
 
                                 Intent intent = new Intent(SleepPostureActivity.this, AutomaticCallActivity.class);
                                 intent.putExtra("phoneNumber", "0767212783");
                                 intent.putExtra("startTime", 1616048600000L);
                                 startActivity(intent);
                                 finish();
+                                Thread.sleep(5000);
 
                             }
                         } else {
@@ -198,13 +203,10 @@ public class SleepPostureActivity extends AppCompatActivity {
                     }
                 }
             })
-.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Handle failure
-                    Toast.makeText(SleepPostureActivity.this, "Pose detection failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+.addOnFailureListener(e -> {
+    // Handle failure
+    Toast.makeText(SleepPostureActivity.this, "Pose detection failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+});
         }
     };
 

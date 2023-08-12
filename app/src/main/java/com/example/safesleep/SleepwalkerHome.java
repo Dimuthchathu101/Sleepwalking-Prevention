@@ -240,10 +240,6 @@ private void checkMedianTime(String medianTime) {
             long timeDifference = (currentTimeDate.getTime() - medianTimeDate.getTime()) / 1000;
 
             if (Math.abs(timeDifference) <= 30) { // Check if the difference is within 30 seconds
-//                Intent intent = new Intent(SleepwalkerHome.this, AutomaticCallActivity.class);
-//                intent.putExtra("phoneNumber", "0767212783");
-//                intent.putExtra("startTime", 1616048600000L);
-//                startActivity(intent);
                 caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

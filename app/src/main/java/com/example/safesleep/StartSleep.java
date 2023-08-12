@@ -707,8 +707,11 @@ public void onSensorChanged(SensorEvent sensorEvent) {
                 // Update the Firebase database with the new message entry
 
                 DatabaseReference myRef = database.getReference("messages");
-
                 myRef.child(messageKey).setValue(messageKey);
+
+                DatabaseReference lastepisode = database.getReference("lastepisode");
+
+                lastepisode.setValue(messageKey);
 
                 // Assuming you have initialized the "mediaPlayer" variable
 

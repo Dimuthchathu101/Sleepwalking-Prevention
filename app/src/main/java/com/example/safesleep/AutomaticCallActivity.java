@@ -42,16 +42,13 @@ public class AutomaticCallActivity extends AppCompatActivity {
         }
 
         Button goBackButton = findViewById(R.id.navigatebackautomatedcall);
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to SleepPreferences activity
-                Intent intent = new Intent(AutomaticCallActivity.this, DoctorHomeActivity.class);
-                startActivity(intent);
+        goBackButton.setOnClickListener(v -> {
+            // Navigate to SleepPreferences activity
+            Intent intent = new Intent(AutomaticCallActivity.this, SleepwalkerHome.class);
+            startActivity(intent);
 
-                // Finish the current activity
-                finish();
-            }
+            // Finish the current activity
+            finish();
         });
     }
 

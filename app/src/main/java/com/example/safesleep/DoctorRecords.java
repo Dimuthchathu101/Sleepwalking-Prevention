@@ -52,16 +52,13 @@ public class DoctorRecords extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 Button goBackButton = findViewById(R.id.navigatebackdoctor);
-                goBackButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Navigate to SleepPreferences activity
-                        Intent intent = new Intent(DoctorRecords.this, DoctorHomeActivity.class);
-                        startActivity(intent);
+                goBackButton.setOnClickListener(v -> {
+                    // Navigate to SleepPreferences activity
+                    Intent intent = new Intent(DoctorRecords.this, DoctorHomeActivity.class);
+                    startActivity(intent);
 
-                        // Finish the current activity
-                        finish();
-                    }
+                    // Finish the current activity
+                    finish();
                 });
             }
 

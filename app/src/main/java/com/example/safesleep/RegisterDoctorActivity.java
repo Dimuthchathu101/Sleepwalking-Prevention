@@ -52,13 +52,10 @@ public class RegisterDoctorActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("doctors");
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        btnLogin.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         signupButtonDoctor.setOnClickListener(view -> {
@@ -89,21 +86,18 @@ public class RegisterDoctorActivity extends AppCompatActivity {
             }
 
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegisterDoctorActivity.this, "Authentication passed",
-                                        Toast.LENGTH_SHORT).show();
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterDoctorActivity.this, "Authentication passed",
+                                    Toast.LENGTH_SHORT).show();
 
-                                // TODO: Add any additional logic after successful registration
-                                Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(RegisterDoctorActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                            // TODO: Add any additional logic after successful registration
+                            Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterDoctorActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     });
 
