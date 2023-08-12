@@ -129,4 +129,16 @@
         app:cornerRadius="50dp"
         android:layout_gravity="center" />
 
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:id="@+id/sleepMotion"
+        android:text="Sleep Motion"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        app:cornerRadius="50dp"
+        android:layout_gravity="center" />
+
 </LinearLayout>

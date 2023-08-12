@@ -33,7 +33,7 @@ public class SleepwalkerHome extends AppCompatActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private boolean shouldCheckMedian = true;
 
-    Button btnPrferences, btnRecords;
+    Button btnPrferences, btnRecords,btnTrack;
     TextView suggestion01, suggestion02, suggestion04, suggestion05;
 
     @Override
@@ -43,6 +43,7 @@ public class SleepwalkerHome extends AppCompatActivity {
 
         btnPrferences = findViewById(R.id.sleepwpreferences);
         btnRecords = findViewById(R.id.sleepRecords);
+        btnTrack = findViewById(R.id.sleepMotion);
 
         suggestion01 = findViewById(R.id.suggestion01sleep);
         suggestion02 = findViewById(R.id.suggestion02sleep);
@@ -51,6 +52,12 @@ public class SleepwalkerHome extends AppCompatActivity {
 
         btnPrferences.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SleepPreferences.class);
+            startActivity(intent);
+            finish();
+        });
+
+        btnTrack.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SleepPostureActivity.class);
             startActivity(intent);
             finish();
         });

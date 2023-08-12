@@ -13,9 +13,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterDoctorActivity extends AppCompatActivity {
 
@@ -45,6 +48,9 @@ public class RegisterDoctorActivity extends AppCompatActivity {
         emaildoctor = findViewById(R.id.emaildoctor);
         usernamedoctor = findViewById(R.id.usernamedoctor);
         signupButtonDoctor = findViewById(R.id.signupButtonDoctor);
+
+        FirebaseApp.initializeApp(this);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("doctors");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,21 +106,36 @@ public class RegisterDoctorActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+            String qualifications = qualificationsdoctor.getText().toString();
+            String username = usernamedoctor.getText().toString();
+
+            // Create a Doctor object or use a Map to store the data
+            Doctors doctor = new Doctors(username, email, qualifications);
+
+            // Example: Storing the data under a "doctors" node with a generated key
+            String key = databaseReference.push().getKey();
+            databaseReference.child(key).setValue(doctor);
+
+            // Display success or failure message
+            Toast.makeText(getApplicationContext(), "Doctor registered successfully!", Toast.LENGTH_SHORT).show();
         });
 
+
+
     }
-//        @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            moveToSleepwalkerHome();
-//        }
-//    }
+        @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            moveToSleepwalkerHome();
+        }
+    }
 
     private void moveToSleepwalkerHome() {
-        Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
         startActivity(intent);
         finish();
     }

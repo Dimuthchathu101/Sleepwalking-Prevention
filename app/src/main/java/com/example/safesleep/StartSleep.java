@@ -117,23 +117,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         recyclerView.setAdapter(adapter);
 
 
-
-//        btnStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bedtime = String.valueOf(et_prefeeredTime.getText());
-//
-//                if (mediaplayer2.isPlaying()) {
-//                    mediaplayer2.stop();
-//                    btnStart.setText("START");
-//                } else {
-//                    mediaplayer2.start();
-//                    btnStart.setText("STOP");
-//                }
-//
-//                sleeptime.setValue(bedtime);
-//            }
-//        });
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,6 +216,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                     Collections.sort(validSecondsSinceMidnightList);
                     // Get the time part (HHmmss) from the message key
                     String timePart = messageKey.substring(9); // Assuming format "yyyyMMdd_HHmmss"
+
 
                     try {
                         // Extract hours, minutes, and seconds
@@ -562,6 +546,8 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                     }
 
 
+
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         // Handle the error here if retrieval fails
@@ -704,10 +690,10 @@ public void onSensorChanged(SensorEvent sensorEvent) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         String value = dataSnapshot.getValue(String.class);
-                                        Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
-                intent.putExtra("phoneNumber", value);
-                intent.putExtra("startTime", 1616048600000L);
-                startActivity(intent);
+                        Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
+                        intent.putExtra("phoneNumber", value);
+                        intent.putExtra("startTime", 1616048600000L);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -717,10 +703,6 @@ public void onSensorChanged(SensorEvent sensorEvent) {
                     }
                 });
 
-//                Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
-//                intent.putExtra("phoneNumber", "0767212783");
-//                intent.putExtra("startTime", 1616048600000L);
-//                startActivity(intent);
 
                 // Update the Firebase database with the new message entry
 
