@@ -18,12 +18,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DoctorSuggestions extends AppCompatActivity {
 
+    /**Firebase Database Options
+     * */
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference getuptimesuggestion = database.getReference("getuptimesuggestion");
     DatabaseReference scheduledawakening = database.getReference("scheduledawakening");
     DatabaseReference sleepingtimesuggestion = database.getReference("sleepingtimesuggestion");
     DatabaseReference doctoradvise = database.getReference("doctoradvise");
 
+    /**
+     * Edit Text */
     EditText doctorrecomendations;
     EditText suggestedscheduledawake;
     EditText suggestedawake;
@@ -51,6 +55,7 @@ public class DoctorSuggestions extends AppCompatActivity {
         btndoctorupdate = findViewById(R.id.btndoctorupdate);
         navigatebackdoctorsugg = findViewById(R.id.navigatebackdoctorsugg);
 
+        // Setting Values
         getuptimesuggestion.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,7 +73,7 @@ public class DoctorSuggestions extends AppCompatActivity {
             }
         });
 
-        // Read from the database
+        // Read from the database ( Scheduled Awakeing)
         scheduledawakening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,7 +91,7 @@ public class DoctorSuggestions extends AppCompatActivity {
             }
         });
 
-        // Read from the database
+        // Sleeping Time Suggestion (Read from the database)
         sleepingtimesuggestion.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,6 +109,7 @@ public class DoctorSuggestions extends AppCompatActivity {
             }
         });
 
+        // Doctor Advise ( Read From Database)
         doctoradvise.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -121,11 +127,13 @@ public class DoctorSuggestions extends AppCompatActivity {
             }
         });
 
+        // Button Doctor Update
         btndoctorupdate.setOnClickListener(view -> {
             String suggestion = String.valueOf(suggestedcurrentrecomendations.getText());
             doctoradvise.setValue(" "+suggestion);
         });
 //
+        // navigate to doctor suggestions
         navigatebackdoctorsugg.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), DoctorHomeActivity.class);
             startActivity(intent);

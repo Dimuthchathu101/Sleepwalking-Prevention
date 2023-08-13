@@ -20,6 +20,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class DetailActivity extends AppCompatActivity {
 
+    // Setting up the variables
     TextView detailDesc, detailTitle, detailLang;
     ImageView detailImage;
     FloatingActionButton deleteButton, editButton;
@@ -31,6 +32,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        // Setting Detials, Details
         detailDesc = findViewById(R.id.detailDesc);
         detailImage = findViewById(R.id.detailImage);
         detailTitle = findViewById(R.id.detailTitle);
@@ -38,6 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         editButton = findViewById(R.id.editButton);
         detailLang = findViewById(R.id.detailLang);
 
+        // Get Bundle Details
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             detailDesc.setText(bundle.getString("Description"));
@@ -47,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
             imageUrl = bundle.getString("Image");
             Glide.with(this).load(bundle.getString("Image")).into(detailImage);
         }
+
+        // Delete Button Options
         deleteButton.setOnClickListener(view -> {
             final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -59,6 +64,8 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             });
         });
+
+        // Edit Button Options
         editButton.setOnClickListener(view -> {
             Intent intent = new Intent(DetailActivity.this, UpdateActivity.class)
                     .putExtra("Title", detailTitle.getText().toString())

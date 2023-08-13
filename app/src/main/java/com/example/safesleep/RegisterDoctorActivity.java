@@ -22,8 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterDoctorActivity extends AppCompatActivity {
 
+    // Setting Variables
     Button btnRegister, btnLogin;
-
     EditText confirmPasswordDoctor;
     EditText        passworddoctor;
     EditText smlcRegistrationdoctor;
@@ -40,6 +40,7 @@ public class RegisterDoctorActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        // Setting up the UI
         btnLogin = findViewById(R.id.regLoginDoctor);
         confirmPasswordDoctor = findViewById(R.id.confirmPasswordDoctor);
         passworddoctor = findViewById(R.id.passworddoctor);
@@ -49,15 +50,18 @@ public class RegisterDoctorActivity extends AppCompatActivity {
         usernamedoctor = findViewById(R.id.usernamedoctor);
         signupButtonDoctor = findViewById(R.id.signupButtonDoctor);
 
+        // Firebase initailization
         FirebaseApp.initializeApp(this);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("doctors");
 
+        // Login on click listener
         btnLogin.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         });
 
+        // Sign Up Button Onclick Listener
         signupButtonDoctor.setOnClickListener(view -> {
             String email, password, name, confirmPassword; // Fix the variable name here
             name = String.valueOf(usernamedoctor.getText());

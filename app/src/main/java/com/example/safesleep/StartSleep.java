@@ -55,9 +55,8 @@ import java.util.Set;
 
 public class StartSleep extends AppCompatActivity implements SensorEventListener {
 
+    // Declaration of variables
     private TextView textViewCounter, textViewDetector;
-
-
     private Button btnStart,btnAwake;
     TextView sleepAwakeing;
     private SensorManager sensorManager;
@@ -82,7 +81,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_sleep);
 
-
+        // Keeping the scrren on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         messagesMap = new HashMap<>();
@@ -101,14 +100,14 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         mediaplayer2 = MediaPlayer.create(this,R.raw.fusion);
 
 
+        // Database References
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
         DatabaseReference messagesRef = database.getReference("messages");
         DatabaseReference sleepTime = database.getReference("sleeptime");
         DatabaseReference awakeTime = database.getReference("awaketime");
         DatabaseReference sleeptime = database.getReference("sleeptime2");
 
-
+        // RecyclerView
         recyclerView = findViewById(R.id.recycler_view2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -116,7 +115,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         adapter = new MessageAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
-
+        // Start Button
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,16 +171,13 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 adapter.notifyDataSetChanged();
 
                 Button goBackButton = findViewById(R.id.navigatebackstartsleep);
-                goBackButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Navigate to SleepPreferences activity
-                        Intent intent = new Intent(StartSleep.this, SleepwalkerHome.class);
-                        startActivity(intent);
+                goBackButton.setOnClickListener(v -> {
+                    // Navigate to SleepPreferences activity
+                    Intent intent = new Intent(StartSleep.this, SleepwalkerHome.class);
+                    startActivity(intent);
 
-                        // Finish the current activity
-                        finish();
-                    }
+                    // Finish the current activity
+                    finish();
                 });
             }
 
@@ -192,7 +188,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
             }
         });
 
-
+        // Database Retreival
         messagesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -331,8 +327,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                         });
 
-
-
+                // Sleep Time Onclick Listener
                 sleeptime.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -424,10 +419,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                         // Format the time before median as "HH:mm:ss"
                         String timeBeforeMedian = String.format("%02d:%02d:%02d", timeBeforeMedianHours, timeBeforeMedianMinutes, timeBeforeMedianSeconds);
 
-                        // Display the time before median in a Toast
-//                        sleepAwakeing.setText("Awakening Time :" + timeBeforeMedian);
-//                        sleepAwakeing.setTextColor(Color.RED);
-//                        sleepAwakeing.setTextSize(18);
 
                         Toast.makeText(StartSleep.this, "Sleeping Time :" + timeBeforeMedian, Toast.LENGTH_SHORT).show();
                         DatabaseReference sleeping = database.getReference("sleepingtimesuggestion");
@@ -444,6 +435,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                 });
 
+                // Awake Time Firebase Functions
                 awakeTime.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -535,18 +527,11 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                         // Format the time before median as "HH:mm:ss"
                         String timeBeforeMedian = String.format("%02d:%02d:%02d", timeBeforeMedianHours, timeBeforeMedianMinutes, timeBeforeMedianSeconds);
 
-                        // Display the time before median in a Toast
-                        // sleepAwakeing.setText("Awakening Time :" + timeBeforeMedian);
-//                        sleepAwakeing.setTextColor(Color.RED);
-//                        sleepAwakeing.setTextSize(18);
 
                         Toast.makeText(StartSleep.this, "Getup Time : " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
                         DatabaseReference myRef = database.getReference("getuptimesuggestion");
                         myRef.setValue(timeBeforeMedian);
                     }
-
-
-
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -562,9 +547,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 //                new WekaClassificationTask().execute(dataList);
             }
 
-
-
-
+            // Add To Calendar
             private void addToCalendar(String timeBeforeMedian) {
                 // ... (your existing code)
 
@@ -581,7 +564,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
             }
 
-
+            // Get Event Time In Milliseconds
             private long getEventTimeInMillis(String timeBeforeMedian) {
                 // Parse the timeBeforeMedian string to get the hours, minutes, and seconds
                 String[] timeParts = timeBeforeMedian.split(":");
@@ -629,7 +612,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
     }
 
 
-
+    // Weka Calssification
     private class WekaClassificationTask extends AsyncTask<List<DataModel>, Void, Void> {
         @Override
         protected Void doInBackground(List<DataModel>... dataLists) {
@@ -649,7 +632,9 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         }
     }
 
-
+    /**
+     * This method is very essential when handling sensor data
+     * */
 public void onSensorChanged(SensorEvent sensorEvent) {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -720,15 +705,6 @@ public void onSensorChanged(SensorEvent sensorEvent) {
     }
 }
 
-//    @Override
-//    public int onStartCommand(Intent intent, int flags, int startId) {
-//        if (!isRunning) {
-//            isRunning = true;
-//            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-//        }
-//        return START_STICKY;
-//    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -736,8 +712,7 @@ public void onSensorChanged(SensorEvent sensorEvent) {
         sensorManager.unregisterListener(this);
     }
 
-
-
+    // Get the current time
     private String getCurrentTime() {
         // Get the current date and time
         Date currentTime = new Date();
@@ -747,7 +722,7 @@ public void onSensorChanged(SensorEvent sensorEvent) {
         return sdf.format(currentTime);
     }
 
-
+    // This method is called when there is a change in accuracy of the sensors
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Validate the sensor type
@@ -770,7 +745,6 @@ public void onSensorChanged(SensorEvent sensorEvent) {
             }
         }
     }
-
 
     @Override
     protected void onResume() {

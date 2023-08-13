@@ -31,21 +31,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         int currentHour = now.get(Calendar.HOUR_OF_DAY);
         int currentMinute = now.get(Calendar.MINUTE);
 
-        // Get the phone number you want to call
-//        String phoneNumber = "0375776312"; // Replace with the actual phone number
-//
-//        // Create the phone call intent
-//        Intent callIntent = new Intent(Intent.ACTION_CALL);
-//        callIntent.setData(Uri.parse("tel:" + phoneNumber));
-//        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//        try {
-//            // Start the phone call
-//            context.startActivity(callIntent);
-//        } catch (SecurityException e) {
-//            Log.e("AlarmReceiver", "Error starting phone call: " + e.getMessage());
-//        }
-
 
         // Check if the current time is within five minutes of the alarm time
         if (Math.abs(currentHour - timeBeforeMedianHours) == 0 && Math.abs(currentMinute - timeBeforeMedianMinutes) <= 5) {

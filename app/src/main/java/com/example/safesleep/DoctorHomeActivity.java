@@ -37,7 +37,6 @@ public class DoctorHomeActivity extends AppCompatActivity {
         tvSuggestion04 = findViewById(R.id.suggestion04);
         tvsuggestion01 = findViewById(R.id.suggestion01);
         tvSuggestion2 = findViewById(R.id.suggestion02);
-//        tvSuggestion4 = findViewById(R.id.suggest);
         btnPatients = findViewById(R.id.doctorPatients);
         btnRecords = findViewById(R.id.doctorRecords);
         doctorSuggestions = findViewById(R.id.doctorSuggestions);

@@ -34,6 +34,7 @@ import java.util.Calendar;
 
 public class UploadActivity extends AppCompatActivity {
 
+    // Variable Declaration
     ImageView uploadImage;
     Button saveButton;
     EditText uploadTopic, uploadDesc, uploadLang;
@@ -45,6 +46,7 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
+        // Initialization of UI
         uploadImage = findViewById(R.id.uploadImage);
         uploadDesc = findViewById(R.id.uploadDesc);
         uploadTopic = findViewById(R.id.uploadTopic);
@@ -73,16 +75,11 @@ public class UploadActivity extends AppCompatActivity {
         saveButton.setOnClickListener(view -> saveData());
     }
 
+    // Save Data
     public void saveData(){
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
                 .child(uri.getLastPathSegment());
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
-//        builder.setCancelable(false);
-//        builder.setView(R.layout.progress_layout);
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
 
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
 
@@ -97,6 +94,7 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
+    // Upload Data
     public void uploadData(){
 
         String title = uploadTopic.getText().toString();

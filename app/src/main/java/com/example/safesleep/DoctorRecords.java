@@ -32,13 +32,14 @@ public class DoctorRecords extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_records);
 
+        // Data options ( RecylcerView)
         recyclerView = findViewById(R.id.recycler_viewdoctor);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         dataList = new ArrayList<>();
         adapter = new MessageAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
+        // Sleep Awakeing Time Suggestion
         DatabaseReference messagesRef2 = FirebaseDatabase.getInstance().getReference("messages");
         messagesRef2.addValueEventListener(new ValueEventListener() {
             @Override
@@ -51,15 +52,6 @@ public class DoctorRecords extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
 
-                Button goBackButton = findViewById(R.id.navigatebackdoctor);
-                goBackButton.setOnClickListener(v -> {
-                    // Navigate to SleepPreferences activity
-                    Intent intent = new Intent(DoctorRecords.this, DoctorHomeActivity.class);
-                    startActivity(intent);
-
-                    // Finish the current activity
-                    finish();
-                });
             }
 
             @Override
@@ -68,5 +60,17 @@ public class DoctorRecords extends AppCompatActivity {
                 Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
+
+        // Go Back Button Handling
+        Button goBackButton = findViewById(R.id.navigatebackdoctor);
+        goBackButton.setOnClickListener(v -> {
+            // Navigate to SleepPreferences activity
+            Intent intent = new Intent(DoctorRecords.this, DoctorHomeActivity.class);
+            startActivity(intent);
+
+            // Finish the current activity
+            finish();
+        });
     }
+
 }

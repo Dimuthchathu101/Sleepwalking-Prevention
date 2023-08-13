@@ -30,6 +30,7 @@ import java.util.TreeSet;
 
 public class SleepwalkerHome extends AppCompatActivity {
 
+    // Setting up the variables
     private Handler handler = new Handler(Looper.getMainLooper());
     private boolean shouldCheckMedian = true;
 
@@ -41,10 +42,12 @@ public class SleepwalkerHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleepwalker_home);
 
+        // Setting up the buttons
         btnPrferences = findViewById(R.id.sleepwpreferences);
         btnRecords = findViewById(R.id.sleepRecords);
         btnTrack = findViewById(R.id.sleepMotion);
 
+        // Setting up the suggestions
         suggestion01 = findViewById(R.id.suggestion01sleep);
         suggestion02 = findViewById(R.id.suggestion02sleep);
         suggestion04 = findViewById(R.id.suggestion03sleep);
@@ -62,6 +65,7 @@ public class SleepwalkerHome extends AppCompatActivity {
             finish();
         });
 
+        // Firebase Database options
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference messagesRef = database.getReference("messages");
         DatabaseReference sleepTime = database.getReference("sleepingtimesuggestion");
@@ -70,6 +74,8 @@ public class SleepwalkerHome extends AppCompatActivity {
         DatabaseReference doctoradvise = database.getReference("doctoradvise");
 
 
+
+        // Sleepwalker Time
         messagesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -129,6 +135,7 @@ public class SleepwalkerHome extends AppCompatActivity {
             }
         });
 
+        // Sleep Time Suggestion
         sleepTime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,6 +156,7 @@ public class SleepwalkerHome extends AppCompatActivity {
             }
         });
 
+        // Sleep Time Suggestion 02
         sleeptime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -167,6 +175,7 @@ public class SleepwalkerHome extends AppCompatActivity {
             }
         });
 
+        // Sleep Time
         awakeTime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -185,6 +194,7 @@ public class SleepwalkerHome extends AppCompatActivity {
             }
         });
 
+        // Doctor Advise
         doctoradvise.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -205,20 +215,17 @@ public class SleepwalkerHome extends AppCompatActivity {
             }
         });
 
-
-
+        // Records button onclick
         btnRecords.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), StartSleep.class);
             startActivity(intent);
             finish();
 
-//            Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-//            startActivity(intent);
-//            finish();
         });
 
     }
 
+    // Check Median Time
 private void checkMedianTime(String medianTime) {
     if (shouldCheckMedian) {
         Calendar currentTime = Calendar.getInstance();
@@ -239,6 +246,7 @@ private void checkMedianTime(String medianTime) {
             // Calculate the difference between median time and current time in seconds
             long timeDifference = (currentTimeDate.getTime() - medianTimeDate.getTime()) / 1000;
 
+            // checking for 30 seconds interval
             if (Math.abs(timeDifference) <= 30) { // Check if the difference is within 30 seconds
                 caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -270,10 +278,6 @@ private void checkMedianTime(String medianTime) {
         }
     }
 }
-
-//    private void showToast(String message) {
-//        Toast.makeText(SleepwalkerHome.this, message, Toast.LENGTH_SHORT).show();
-//    }
 
 
     @Override

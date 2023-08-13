@@ -42,6 +42,7 @@ import java.util.Locale;
 
 public class SleepPreferences extends AppCompatActivity {
 
+    // Setting up the variables
     private TextView tvSelectedDate;
     private TextView tvSelectedTime;
     private TextView tvSelectedAwake;
@@ -49,15 +50,14 @@ public class SleepPreferences extends AppCompatActivity {
     private EditText etcaretakerMobile, etcaretakerEmail;
 
     private TextView tvCaretakerMobile, tvCaretakerEmail;
-    
 
     Button goBackButton, updatePreferences;
     String caretakerEmail, caretakerMobile;
 
+    // Firebase Options
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
     DatabaseReference caretakerEmailFirebase= database.getReference("caretakeremail");
-
 
 
     @Override
@@ -65,6 +65,7 @@ public class SleepPreferences extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_preferences);
 
+        // Setting up the UI
         tvSelectedDate = findViewById(R.id.tvSelectedDate);
         tvSelectedTime = findViewById(R.id.tvSelectedTime);
         tvSelectedAwake = findViewById(R.id.tvEndTime);
@@ -79,6 +80,7 @@ public class SleepPreferences extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
 
+        // Go Back Button Options
         goBackButton = findViewById(R.id.navigatebackbutton);
         goBackButton.setOnClickListener(v -> {
             // Navigate to SleepPreferences activity
@@ -89,6 +91,7 @@ public class SleepPreferences extends AppCompatActivity {
             finish();
         });
 
+        // Adding the mobile number to firebase database
         caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,6 +108,7 @@ public class SleepPreferences extends AppCompatActivity {
             }
         });
 
+        // Setting the caretaker email in the firebase database
         caretakerEmailFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -121,8 +125,7 @@ public class SleepPreferences extends AppCompatActivity {
             }
         });
 
-
-
+        // Update the Preferences Button
         updatePreferences = findViewById(R.id.btnPreferncesupdate);
         updatePreferences.setOnClickListener(v -> {
             // Navigate to SleepPreferences activity
@@ -141,6 +144,7 @@ public class SleepPreferences extends AppCompatActivity {
         });
     }
 
+    // Show Date Picker Option to select the date
     public void showDatePicker(View view) {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -161,6 +165,7 @@ public class SleepPreferences extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    // show time picker option to select the time
     public void showTimePicker(View view) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -179,6 +184,7 @@ public class SleepPreferences extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    // Time Picker to Awake
     public void showTimePickerAwake(View view) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -197,6 +203,8 @@ public class SleepPreferences extends AppCompatActivity {
         timePickerDialog.show();
     }
     // Function to validate email format
+
+    // Regular Epxressions
     private boolean isValidEmail(String email) {
         // Use a regular expression to validate email format
         // This is a simple example; you might want to use a more comprehensive regex

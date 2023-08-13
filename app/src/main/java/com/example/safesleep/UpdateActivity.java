@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class UpdateActivity extends AppCompatActivity {
 
+    // Variable Declaration
     ImageView updateImage;
     Button updateButton;
     EditText updateDesc, updateTitle, updateLang;
@@ -47,6 +48,7 @@ public class UpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        //Setting up the UI
         updateButton = findViewById(R.id.updateButton);
         updateDesc = findViewById(R.id.updateDesc);
         updateImage = findViewById(R.id.updateImage);
@@ -87,10 +89,9 @@ public class UpdateActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+    // Save Data Method
     public void saveData(){
         storageReference = FirebaseStorage.getInstance().getReference().child("Android Images").child(uri.getLastPathSegment());
-
-
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
             while (!uriTask.isComplete());
@@ -100,6 +101,7 @@ public class UpdateActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> {
         });
     }
+    // Update Data Method
     public void updateData(){
         title = updateTitle.getText().toString().trim();
         desc = updateDesc.getText().toString().trim();
@@ -107,15 +109,12 @@ public class UpdateActivity extends AppCompatActivity {
 
         DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
 
-        databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
-                    reference.delete();
-                    Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+        databaseReference.setValue(dataClass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
+                reference.delete();
+                Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }).addOnFailureListener(e -> Toast.makeText(UpdateActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show());
     }

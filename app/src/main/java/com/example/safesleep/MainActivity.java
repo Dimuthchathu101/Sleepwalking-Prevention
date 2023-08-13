@@ -172,26 +172,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-//        Intent serviceIntent = new Intent(this, SleepRecords.class);
-//        startService(serviceIntent);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//
-//        // Set alarm for 10 AM
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 10);
-//        calendar.set(Calendar.MINUTE, 0);
-//        calendar.set(Calendar.SECOND, 0);
-//
-//        // Intent to trigger broadcast receiver
-//        Intent intent = new Intent(this, StartMonitoringReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-//
-//        // Set repeating alarm
-//        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-
+    // Login User Function
     private void loginUser() {
         String email = loginEmail.getText().toString().trim();
         String password = loginPassword.getText().toString().trim();
@@ -224,6 +207,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    // On Start Method
+    /**
+     * In this method user will be directed to home screen of doctor or sleepwalker
+     * */
     @Override
     public void onStart() {
         super.onStart();

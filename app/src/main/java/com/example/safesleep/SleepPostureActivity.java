@@ -52,8 +52,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.internal.Experimental;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseDetection;
@@ -185,12 +188,26 @@ public class SleepPostureActivity extends AppCompatActivity {
 
                                 lastepisode.setValue(messageKey);
 
-                                Intent intent = new Intent(SleepPostureActivity.this, AutomaticCallActivity.class);
-                                intent.putExtra("phoneNumber", "0767212783");
-                                intent.putExtra("startTime", 1616048600000L);
-                                startActivity(intent);
-                                finish();
-                                Thread.sleep(5000);
+                                DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
+                                caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        // This method is called once with the initial value and again
+                                        // whenever data at this location is updated.
+                                        String value = dataSnapshot.getValue(String.class);
+                                        Intent intent = new Intent(SleepPostureActivity.this, AutomaticCallActivity.class);
+                                        intent.putExtra("phoneNumber", value);
+                                        intent.putExtra("startTime", 1616048600000L);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError error) {
+                                        // Failed to read value
+                                        Log.w("TAG", "Failed to read value.", error.toException());
+                                    }
+                                });
 
                             }
                         } else {

@@ -113,6 +113,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterScreen extends AppCompatActivity {
 
+    // Setting up the variables
     EditText editEmail, editPassword, editName, editConfirmPassword; // Fix the variable name here
     Button btnReg, regLogin, docregister;
     private FirebaseAuth mAuth;
@@ -134,18 +135,21 @@ public class RegisterScreen extends AppCompatActivity {
         regLogin = findViewById(R.id.regLogin);
         docregister = findViewById(R.id.regLoginDoctor);
 
+        // Login Button onClickListener
         regLogin.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
         });
 
+        // Resgister Button Onclick Listener
         docregister.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), RegisterDoctorActivity.class);
             startActivity(intent);
             finish();
         });
 
+        // Register Button Onclick Functions
         btnReg.setOnClickListener(view -> {
             String email, password, name, confirmPassword; // Fix the variable name here
             name = String.valueOf(editName.getText());

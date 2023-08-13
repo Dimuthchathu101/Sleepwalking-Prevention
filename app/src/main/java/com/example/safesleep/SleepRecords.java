@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SleepRecords extends AppCompatActivity {
+
+    // Setting up the variables
     private FloatingActionButton fab;
     private DatabaseReference databaseReference;
     private ValueEventListener eventListener;
@@ -38,11 +40,13 @@ public class SleepRecords extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_records);
 
+        // Setting up the UI
         recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.fab);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
 
+        // Grid Layout Manager
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 
@@ -93,7 +97,7 @@ public void onDataChange(@NonNull DataSnapshot snapshot) {
 
         });
 
-
+        // Search View Query to search the users
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
