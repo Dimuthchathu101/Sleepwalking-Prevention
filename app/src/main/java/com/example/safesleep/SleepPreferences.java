@@ -142,6 +142,61 @@ public class SleepPreferences extends AppCompatActivity {
             }
 
         });
+
+        DatabaseReference sleepdatepreference = database.getReference("sleepdatepreference");
+        sleepdatepreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                tvSelectedDate.setText("Selected Date: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
+        DatabaseReference sleeptimepreference = database.getReference("sleeptimepreference");
+
+        sleeptimepreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                tvSelectedTime.setText("Bed Time: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
+        DatabaseReference awaketimepreference = database.getReference("awaketimepreference");
+
+        awaketimepreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                tvSelectedAwake.setText("Awake Time: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+
+            }
+        });
+
+
     }
 
     // Show Date Picker Option to select the date
@@ -158,8 +213,12 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     String selectedDate = dateFormat.format(calendar.getTime());
-                    tvSelectedDate.setText("Selected Date: " + selectedDate);
-                    tvSelectedDate.setVisibility(View.VISIBLE);
+//                    tvSelectedDate.setText("Selected Date: " + selectedDate);
+//                    tvSelectedDate.setVisibility(View.VISIBLE);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference sleepdatepreference = database.getReference("sleepdatepreference");
+                    sleepdatepreference.setValue(selectedDate);
+
                 }, year, month, day);
 
         datePickerDialog.show();
@@ -177,8 +236,13 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     String selectedTime = timeFormat.format(calendar.getTime());
-                    tvSelectedTime.setText("Selected Time: " + selectedTime);
-                    tvSelectedTime.setVisibility(View.VISIBLE);
+//                    tvSelectedTime.setText("Selected Time: " + selectedTime);
+//                    tvSelectedTime.setVisibility(View.VISIBLE);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference sleeptimepreference = database.getReference("sleeptimepreference");
+                    sleeptimepreference.setValue(selectedTime);
+
+
                 }, hour, minute, true);
 
         timePickerDialog.show();
@@ -196,8 +260,11 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     String selectedTime = timeFormat.format(calendar.getTime());
-                    tvSelectedAwake.setText("Selected Time: " + selectedTime);
-                    tvSelectedAwake.setVisibility(View.VISIBLE);
+//                    tvSelectedAwake.setText("Selected Time: " + selectedTime);
+//                    tvSelectedAwake.setVisibility(View.VISIBLE);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference awaketimepreference = database.getReference("awaketimepreference");
+                    awaketimepreference.setValue(selectedTime);
                 }, hour, minute, true);
 
         timePickerDialog.show();

@@ -40,13 +40,7 @@
             android:layout_marginLeft="20dp"
             />
 
-        <TextView
-            android:id="@+id/tvSelectedDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selected Date: "
-            android:visibility="invisible"
-            />
+
     </LinearLayout>
 
 
@@ -71,14 +65,7 @@
             android:textSize="16sp"
             android:onClick="showTimePicker" />
 
-        <TextView
 
-            android:id="@+id/tvSelectedTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selected Time: "
-            android:visibility="invisible"
-            />
     </LinearLayout>
 
     <LinearLayout
@@ -104,13 +91,6 @@
             android:layout_marginLeft="20dp"
             />
 
-        <TextView
-            android:id="@+id/tvEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selected Time: "
-            android:visibility="invisible"
-            />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -215,7 +195,7 @@
         />
 
     <TextView
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -224,6 +204,40 @@
         android:layout_gravity="center"
         android:textColor="@color/red"
         android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvSelectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Date: "
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+
+        android:id="@+id/tvSelectedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Time: "
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/tvEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Time: "
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
         />
 
     <Button
