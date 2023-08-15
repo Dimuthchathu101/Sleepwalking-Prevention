@@ -116,43 +116,41 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         recyclerView.setAdapter(adapter);
 
         // Start Button
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bedtime = String.valueOf(et_prefeeredTime.getText());
+        btnStart.setOnClickListener(view -> {
+            bedtime = String.valueOf(et_prefeeredTime.getText());
 
-                if (!bedtime.isEmpty()) { // Check if the input is not empty
-                    try {
-                        int bedtimeValue = Integer.parseInt(bedtime);
+            if (!bedtime.isEmpty()) { // Check if the input is not empty
+                try {
+                    int bedtimeValue = Integer.parseInt(bedtime);
 
-                        if (bedtimeValue >= 6 && bedtimeValue <= 10) {
-                            try {
-                                if (mediaplayer2.isPlaying()) {
-                                    mediaplayer2.stop();
-                                    btnStart.setText("START");
-                                } else {
-                                    mediaplayer2.start();
-                                    btnStart.setText("STOP");
-                                }
-
-                                sleepTime.setValue(bedtime);
-                            } catch (IllegalStateException e) {
-                                // Handle media player state exception
-                                e.printStackTrace();
+                    if (bedtimeValue >= 6 && bedtimeValue <= 10) {
+                        try {
+                            if (mediaplayer2.isPlaying()) {
+                                mediaplayer2.stop();
+                                btnStart.setText("START");
+                            } else {
+                                mediaplayer2.start();
+                                btnStart.setText("STOP");
                             }
-                        } else {
-                            // Show a toast indicating invalid bedtime value
-                            Toast.makeText(getApplicationContext(), "Bedtime should be between 6 and 10", Toast.LENGTH_SHORT).show();
+
+                            sleepTime.setValue(bedtime);
+                        } catch (IllegalStateException e) {
+                            // Handle media player state exception
+                            e.printStackTrace();
                         }
-                    } catch (NumberFormatException e) {
-                        // Handle number format exception when parsing bedtime
-                        Toast.makeText(getApplicationContext(), "Invalid bedtime value", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                    } else {
+                        // Show a toast indicating invalid bedtime value
+                        Toast.makeText(getApplicationContext(), "Bedtime should be between 6 and 10", Toast.LENGTH_SHORT).show();
+
                     }
-                } else {
-                    // Show a toast indicating empty input
-                    Toast.makeText(getApplicationContext(), "Bedtime value is empty", Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    // Handle number format exception when parsing bedtime
+                    Toast.makeText(getApplicationContext(), "Invalid bedtime value", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
+            } else {
+                // Show a toast indicating empty input
+                Toast.makeText(getApplicationContext(), "Bedtime value is empty", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,8 +163,10 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 dataList.clear();
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                     String key = childSnapshot.getKey();
+                    String messageinfo = "Sleepwalking Detected at: ";
+                    String updated = messageinfo + key;
                     String value = childSnapshot.getValue(String.class);
-                    dataList.add(new DataModel(key, value));
+                    dataList.add(new DataModel(updated, value));
                 }
                 adapter.notifyDataSetChanged();
 
@@ -298,10 +298,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.setTimeInMillis(System.currentTimeMillis());
-//                                calendar.set(Calendar.HOUR_OF_DAY, timeBeforeMedianHours);
-//                                calendar.set(Calendar.MINUTE, timeBeforeMedianMinutes);
-//                                calendar.set(Calendar.SECOND, timeBeforeMedianSeconds);
-
                                 calendar.set(Calendar.HOUR_OF_DAY, timeBeforeMedianHours);
                                 calendar.set(Calendar.MINUTE, timeBeforeMedianMinutes);
                                 calendar.set(Calendar.SECOND, timeBeforeMedianSeconds);

@@ -227,6 +227,7 @@ public class SleepPostureActivity extends AppCompatActivity {
         }
     };
 
+    // Method to gete current time
     private String getCurrentTime() {
         // Get the current date and time
         Date currentTime = new Date();
@@ -237,6 +238,7 @@ public class SleepPostureActivity extends AppCompatActivity {
     }
 
 
+    // Camera is setup to backward camera
     @ExperimentalGetImage
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
         Preview preview = new Preview.Builder()
@@ -305,7 +307,7 @@ public class SleepPostureActivity extends AppCompatActivity {
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
     }
 
-
+    // Obtaining the required permissions
     private String[] getRequiredPermissions() {
         try {
             PackageInfo info =
@@ -322,6 +324,7 @@ public class SleepPostureActivity extends AppCompatActivity {
         }
     }
 
+    // All Permission Granted to users
     private boolean allPermissionsGranted() {
         for (String permission : getRequiredPermissions()) {
             if (!isPermissionGranted(this, permission)) {
@@ -331,6 +334,7 @@ public class SleepPostureActivity extends AppCompatActivity {
         return true;
     }
 
+    // Checking permision is granted
     private static boolean isPermissionGranted(Context context, String permission) {
         if (ContextCompat.checkSelfPermission(context, permission)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -339,6 +343,7 @@ public class SleepPostureActivity extends AppCompatActivity {
         return false;
     }
 
+    // Obtaining Runtime Permisions
     private void getRuntimePermissions() {
         List<String> allNeededPermissions = new ArrayList<>();
         for (String permission : getRequiredPermissions()) {
