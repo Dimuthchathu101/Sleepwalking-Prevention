@@ -2,6 +2,8 @@ package com.example.safesleep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -132,20 +134,32 @@ public class SleepPreferences extends AppCompatActivity {
         // Update the Preferences Button
         updatePreferences = findViewById(R.id.btnPreferncesupdate);
         updatePreferences.setOnClickListener(v -> {
-            // Navigate to SleepPreferences activity
+            // Build and show a confirmation dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(SleepPreferences.this);
+            builder.setTitle("Confirm Changes");
+            builder.setMessage("Are you sure you want to make these changes?");
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                // User clicked OK, proceed with changes
+                String caretakerEmail = etcaretakerEmail.getText().toString();
+                String caretakerMobile = etcaretakerMobile.getText().toString();
 
-            String caretakerEmail = etcaretakerEmail.getText().toString();
-            String caretakerMobile = etcaretakerMobile.getText().toString();
-
-            if (isValidEmail(caretakerEmail) && isValidMobile(caretakerMobile)) {
-                caretakerEmailFirebase.setValue(caretakerEmail);
-                caretakerMobileFirebase.setValue(caretakerMobile);
-            } else {
-                // Show a toast indicating invalid email or mobile format
-                Toast.makeText(getApplicationContext(), "Invalid email or mobile format", Toast.LENGTH_SHORT).show();
-            }
-
+                if (isValidEmail(caretakerEmail) && isValidMobile(caretakerMobile)) {
+                    caretakerEmailFirebase.setValue(caretakerEmail);
+                    caretakerMobileFirebase.setValue(caretakerMobile);
+                    // Show a toast indicating successful changes
+                    Toast.makeText(getApplicationContext(), "Changes applied", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Show a toast indicating invalid email or mobile format
+                    Toast.makeText(getApplicationContext(), "Invalid email or mobile format", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                // User clicked Cancel, do nothing or show a message
+                Toast.makeText(getApplicationContext(), "Changes canceled", Toast.LENGTH_SHORT).show();
+            });
+            builder.show();
         });
+
 
         DatabaseReference sleepdatepreference = database.getReference("sleepdatepreference");
         sleepdatepreference.addValueEventListener(new ValueEventListener() {

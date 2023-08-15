@@ -162,6 +162,7 @@ public class SleepPostureActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                     // Handle exceptions related to pose landmark comparison
                                 }
+                                Thread.sleep(2000);
                             } else {
                                 // Handle the case where some landmarks are missing
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -189,6 +190,7 @@ public class SleepPostureActivity extends AppCompatActivity {
                                         intent.putExtra("startTime", 1616048600000L);
                                         startActivity(intent);
                                         finish();
+
                                     }
 
                                     @Override
@@ -197,6 +199,12 @@ public class SleepPostureActivity extends AppCompatActivity {
                                         Log.w("TAG", "Failed to read value.", error.toException());
                                     }
                                 });
+
+                                Intent intent = new Intent(SleepPostureActivity.this, SleepwalkerHome.class);
+                                startActivity(intent);
+
+                                // Finish the current activity
+                                finish();
 
                             }
                         } else {
@@ -247,50 +255,47 @@ public class SleepPostureActivity extends AppCompatActivity {
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build();
 
-        imageAnalysis.setAnalyzer(ActivityCompat.getMainExecutor(this), new ImageAnalysis.Analyzer() {
-            @Override
-            public void analyze(@NonNull ImageProxy imageProxy) {
-                int rotationDegrees = imageProxy.getImageInfo().getRotationDegrees();
-                // insert your code here.
-                // after done, release the ImageProxy object
-                ByteBuffer byteBuffer = imageProxy.getImage().getPlanes()[0].getBuffer();
-                byteBuffer.rewind();
-                Bitmap bitmap = Bitmap.createBitmap(imageProxy.getWidth(), imageProxy.getHeight(), Bitmap.Config.ARGB_8888);
-                bitmap.copyPixelsFromBuffer(byteBuffer);
+        imageAnalysis.setAnalyzer(ActivityCompat.getMainExecutor(this), imageProxy -> {
+            int rotationDegrees = imageProxy.getImageInfo().getRotationDegrees();
+            // insert your code here.
+            // after done, release the ImageProxy object
+            ByteBuffer byteBuffer = imageProxy.getImage().getPlanes()[0].getBuffer();
+            byteBuffer.rewind();
+            Bitmap bitmap = Bitmap.createBitmap(imageProxy.getWidth(), imageProxy.getHeight(), Bitmap.Config.ARGB_8888);
+            bitmap.copyPixelsFromBuffer(byteBuffer);
 
-                Matrix matrix = new Matrix();
-                matrix.postRotate(270);
-                matrix.postScale(-1,1);
-                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap,0,0,imageProxy.getWidth(), imageProxy.getHeight(),matrix,false);
+            Matrix matrix = new Matrix();
+            matrix.postRotate(270);
+            matrix.postScale(-1,1);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap,0,0,imageProxy.getWidth(), imageProxy.getHeight(),matrix,false);
 
-                bitmapArrayList.add(rotatedBitmap);
+            bitmapArrayList.add(rotatedBitmap);
 
-                if (poseArrayList.size() >= 1) {
-                    canvas = new Canvas(bitmapArrayList.get(0));
+            if (poseArrayList.size() >= 1) {
+                canvas = new Canvas(bitmapArrayList.get(0));
 
-                    for (PoseLandmark poseLandmark : poseArrayList.get(0).getAllPoseLandmarks()) {
-                        canvas.drawCircle(poseLandmark.getPosition().x, poseLandmark.getPosition().y,5,mPaint);
-                    }
-
-                    bitmap4DisplayArrayList.clear();
-                    bitmap4DisplayArrayList.add(bitmapArrayList.get(0));
-                    bitmap4Save = bitmapArrayList.get(bitmapArrayList.size()-1);
-                    bitmapArrayList.clear();
-                    bitmapArrayList.add(bitmap4Save);
-                    poseArrayList.clear();
-                    isRunning = false;
+                for (PoseLandmark poseLandmark : poseArrayList.get(0).getAllPoseLandmarks()) {
+                    canvas.drawCircle(poseLandmark.getPosition().x, poseLandmark.getPosition().y,5,mPaint);
                 }
 
-                if (poseArrayList.size() == 0 && bitmapArrayList.size() >= 1 && !isRunning) {
-                    RunMlkit.run();
-                    isRunning = true;
-                }
-
-                if (bitmap4DisplayArrayList.size() >= 1) {
-                    display.getBitmap(bitmap4DisplayArrayList.get(0));
-                }
-                imageProxy.close();
+                bitmap4DisplayArrayList.clear();
+                bitmap4DisplayArrayList.add(bitmapArrayList.get(0));
+                bitmap4Save = bitmapArrayList.get(bitmapArrayList.size()-1);
+                bitmapArrayList.clear();
+                bitmapArrayList.add(bitmap4Save);
+                poseArrayList.clear();
+                isRunning = false;
             }
+
+            if (poseArrayList.size() == 0 && bitmapArrayList.size() >= 1 && !isRunning) {
+                RunMlkit.run();
+                isRunning = true;
+            }
+
+            if (bitmap4DisplayArrayList.size() >= 1) {
+                display.getBitmap(bitmap4DisplayArrayList.get(0));
+            }
+            imageProxy.close();
         });
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);

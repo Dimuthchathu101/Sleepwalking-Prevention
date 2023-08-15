@@ -4,27 +4,23 @@ package com.example.safesleep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
@@ -34,13 +30,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -124,24 +118,37 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                     int bedtimeValue = Integer.parseInt(bedtime);
 
                     if (bedtimeValue >= 6 && bedtimeValue <= 10) {
-                        try {
-                            if (mediaplayer2.isPlaying()) {
-                                mediaplayer2.stop();
-                                btnStart.setText("START");
-                            } else {
-                                mediaplayer2.start();
-                                btnStart.setText("STOP");
-                            }
+                        // Build and show a confirmation dialog
+                        AlertDialog.Builder builder = new AlertDialog.Builder(StartSleep.this);
+                        builder.setTitle("Mindfulness Music");
+                        builder.setMessage("Do You Want to Start Sleep Now and Play Mindfulness Music to Prepare You for a Safe Sleep ?");
+                        builder.setPositiveButton("OK", (dialog, which) -> {
+                            try {
+                                if (mediaplayer2.isPlaying()) {
+                                    mediaplayer2.stop();
+                                    btnStart.setText("START");
+                                } else {
+                                    mediaplayer2.start();
+                                    btnStart.setText("STOP");
+                                }
 
-                            sleepTime.setValue(bedtime);
-                        } catch (IllegalStateException e) {
-                            // Handle media player state exception
-                            e.printStackTrace();
-                        }
+                                sleepTime.setValue(bedtime);
+                            } catch (IllegalStateException e) {
+                                // Handle media player state exception
+                                e.printStackTrace();
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User clicked Cancel, do nothing or show a message
+                                Toast.makeText(getApplicationContext(), "Operation canceled", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.show();
                     } else {
                         // Show a toast indicating invalid bedtime value
                         Toast.makeText(getApplicationContext(), "Bedtime should be between 6 and 10", Toast.LENGTH_SHORT).show();
-
                     }
                 } catch (NumberFormatException e) {
                     // Handle number format exception when parsing bedtime
@@ -153,6 +160,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 Toast.makeText(getApplicationContext(), "Bedtime value is empty", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         // Add a ValueEventListener to fetch data from Firebase and update the RecyclerView
@@ -286,7 +294,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 sleepAwakeing.setTextColor(Color.RED);
                 sleepAwakeing.setTextSize(18);
 
-                Toast.makeText(StartSleep.this, " Awakeing Time: " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(StartSleep.this, " Awakeing Time: " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
 
                 DatabaseReference myRef = database.getReference("scheduledawakening");
                 myRef.setValue(timeBeforeMedian);
@@ -416,7 +424,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                         String timeBeforeMedian = String.format("%02d:%02d:%02d", timeBeforeMedianHours, timeBeforeMedianMinutes, timeBeforeMedianSeconds);
 
 
-                        Toast.makeText(StartSleep.this, "Sleeping Time :" + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(StartSleep.this, "Sleeping Time :" + timeBeforeMedian, Toast.LENGTH_SHORT).show();
                         DatabaseReference sleeping = database.getReference("sleepingtimesuggestion");
                         sleeping.setValue(timeBeforeMedian);
                     }
@@ -524,7 +532,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                         String timeBeforeMedian = String.format("%02d:%02d:%02d", timeBeforeMedianHours, timeBeforeMedianMinutes, timeBeforeMedianSeconds);
 
 
-                        Toast.makeText(StartSleep.this, "Getup Time : " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(StartSleep.this, "Getup Time : " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
                         DatabaseReference myRef = database.getReference("getuptimesuggestion");
                         myRef.setValue(timeBeforeMedian);
                     }

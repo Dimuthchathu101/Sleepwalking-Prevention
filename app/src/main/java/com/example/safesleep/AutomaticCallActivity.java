@@ -11,13 +11,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class AutomaticCallActivity extends AppCompatActivity {
 
     private static final String TAG = "AutomaticCallActivity";
 
     private String phoneNumber;
     private long startTime;
-
+    private boolean callInProgress = false; // New flag to track call status
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class AutomaticCallActivity extends AppCompatActivity {
         Log.d(TAG, "phoneNumber: " + phoneNumber);
         Log.d(TAG, "startTime: " + startTime);
 
-        // Requesting Permisions
+        // Requesting Permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission("android.permission.CALL_PHONE") != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{"android.permission.CALL_PHONE"}, 1);
@@ -56,9 +57,12 @@ public class AutomaticCallActivity extends AppCompatActivity {
 
     // Make Call to Predefined Function by User
     private void makeCall() {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + phoneNumber));
-        startActivity(intent);
+        if (!callInProgress) { // Check if a call is not in progress
+            callInProgress = true;
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + phoneNumber));
+            startActivity(intent);
+        }
     }
 
     // Request Permission Result
@@ -68,5 +72,11 @@ public class AutomaticCallActivity extends AppCompatActivity {
         if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             makeCall();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        callInProgress = false; // Reset the flag when the activity is destroyed
     }
 }
