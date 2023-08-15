@@ -139,15 +139,23 @@ public class SleepwalkerHome extends AppCompatActivity {
         sleepTime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-                suggestion01.setText("Your Bedtime is : "+ value);
-                suggestion01.setTextColor(Color.BLACK);
-                suggestion01.setTextSize(18);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
 
+                    try {
+                        suggestion01.setText("Your Bedtime is : " + value);
+                        suggestion01.setTextColor(Color.BLACK);
+                        suggestion01.setTextSize(18);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -160,13 +168,23 @@ public class SleepwalkerHome extends AppCompatActivity {
         sleeptime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                suggestion02.setText("Your Getup Time is : "+ value);
-                suggestion02.setTextColor(Color.BLACK);
-                suggestion02.setTextSize(18);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        suggestion02.setText("Your Getup Time is : " + value);
+                        suggestion02.setTextColor(Color.BLACK);
+                        suggestion02.setTextSize(18);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -179,13 +197,23 @@ public class SleepwalkerHome extends AppCompatActivity {
         awakeTime.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-              suggestion04.setText("Your Scheduled Awakeing is at : "+ value);
-                suggestion04.setTextColor(Color.BLACK);
-                suggestion04.setTextSize(18);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        suggestion04.setText("Your Scheduled Awakening is at : " + value);
+                        suggestion04.setTextColor(Color.BLACK);
+                        suggestion04.setTextSize(18);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -198,15 +226,23 @@ public class SleepwalkerHome extends AppCompatActivity {
         doctoradvise.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-                suggestion05.setText("Doctor Suggestions : "+ value);
-                suggestion05.setTextColor(Color.BLACK);
-                suggestion05.setTextSize(18);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
 
+                    try {
+                        suggestion05.setText("Doctor Suggestions : " + value);
+                        suggestion05.setTextColor(Color.BLACK);
+                        suggestion05.setTextSize(18);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {

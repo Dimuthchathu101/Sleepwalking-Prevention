@@ -95,11 +95,21 @@ public class SleepPreferences extends AppCompatActivity {
         caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvCaretakerMobile.setText("Current Caretaker Number: "+value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        tvCaretakerMobile.setText("Current Caretaker Number: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -112,11 +122,21 @@ public class SleepPreferences extends AppCompatActivity {
         caretakerEmailFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvCaretakerEmail.setText("Current Caretaker Number: "+value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        tvCaretakerEmail.setText("Current Caretaker Number: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -147,11 +167,21 @@ public class SleepPreferences extends AppCompatActivity {
         sleepdatepreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvSelectedDate.setText("Selected Date: " + value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        tvSelectedDate.setText("Selected Date: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -165,11 +195,21 @@ public class SleepPreferences extends AppCompatActivity {
         sleeptimepreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvSelectedTime.setText("Bed Time: " + value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        tvSelectedTime.setText("Bed Time: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -183,11 +223,21 @@ public class SleepPreferences extends AppCompatActivity {
         awaketimepreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvSelectedAwake.setText("Awake Time: " + value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        tvSelectedAwake.setText("Awake Time: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
