@@ -668,14 +668,24 @@ public void onSensorChanged(SensorEvent sensorEvent) {
                 caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        String value = dataSnapshot.getValue(String.class);
-                        Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
-                        intent.putExtra("phoneNumber", value);
-                        intent.putExtra("startTime", 1616048600000L);
-                        startActivity(intent);
+                        try {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            String value = dataSnapshot.getValue(String.class);
+
+                            try {
+                                Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
+                                intent.putExtra("phoneNumber", value);
+                                intent.putExtra("startTime", 1616048600000L);  // You might want to replace this timestamp with the correct value
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                Log.e("TAG", "Error creating intent or starting activity: " + e.getMessage());
+                            }
+                        } catch (Exception e) {
+                            Log.e("TAG", "Error reading data: " + e.getMessage());
+                        }
                     }
+
 
                     @Override
                     public void onCancelled(DatabaseError error) {

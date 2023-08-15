@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,11 +58,19 @@ public class DoctorSuggestions extends AppCompatActivity {
         getuptimesuggestion.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                suggestioncurrentawake.setText("Current Getup Time: " +
-                        ""+value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        suggestioncurrentawake.setText("Current Getup Time: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
 
             @Override
@@ -77,12 +84,21 @@ public class DoctorSuggestions extends AppCompatActivity {
         scheduledawakening.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-                suggestioncurrentwalk.setText("Current Scheduled Awakening "+value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+
+                    try {
+                        suggestioncurrentwalk.setText("Current Scheduled Awakening " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -95,12 +111,22 @@ public class DoctorSuggestions extends AppCompatActivity {
         sleepingtimesuggestion.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("TAG", "Value is: " + value);
-                suggestionstxtsleeptime.setText("Current Sleeping Time is" + value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+                    Log.d("TAG", "Value is: " + value);
+
+                    try {
+                        suggestionstxtsleeptime.setText("Current Sleeping Time is" + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -113,12 +139,22 @@ public class DoctorSuggestions extends AppCompatActivity {
         doctoradvise.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("TAG", "Value is: " + value);
-                suggestedcurrentrecomendations.setText("Current Sleeping Recomendation is: " + value);
+                try {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+                    Log.d("TAG", "Value is: " + value);
+
+                    try {
+                        suggestedcurrentrecomendations.setText("Current Sleeping Recommendation is: " + value);
+                    } catch (Exception e) {
+                        Log.e("TAG", "Error setting text: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("TAG", "Error reading data: " + e.getMessage());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {

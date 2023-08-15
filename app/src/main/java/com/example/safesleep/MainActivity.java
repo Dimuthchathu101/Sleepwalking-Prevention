@@ -1,113 +1,9 @@
-//package com.example.safesleep;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import android.content.Context;
-//import android.content.Intent;
-//import android.hardware.Sensor;
-//import android.hardware.SensorManager;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.View;
-//import android.widget.Button;
-//import android.widget.EditText;
-//import android.widget.Toast;
-//
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-//import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//
-//public class MainActivity extends AppCompatActivity {
-//
-//    private SensorManager sensorManager;
-//    private Sensor accelerometerSensor;
-//
-//    // Variables for data preprocessing
-//    private float maxAcceleration = 0.0f;
-//
-//    EditText loginemail;
-//    EditText loginpassword;
-//    Button loginButton, loginSignUp;
-//
-//    private FirebaseAuth mAuth;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//
-//// ...
-//// Initialize Firebase Auth
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-//        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//
-//        // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//
-//        myRef.setValue("Hello, World!");
-//
-//
-//        loginemail= findViewById(R.id.loginemail);
-//        loginpassword = findViewById(R.id.password);
-//        loginButton = findViewById(R.id.roundButton);
-//        loginSignUp = findViewById(R.id.loginSignUp);
-//
-//        loginButton.setOnClickListener(view -> {
-//            String email, password, name, confirmpassword;
-//            email = String.valueOf(loginemail.getText());
-//            password = String.valueOf(loginpassword.getText());
-//            mAuth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, task -> {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//
-//                            Toast.makeText(MainActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        });
-//
-//        loginSignUp.setOnClickListener(view -> {
-//            Intent intent = new Intent(getApplicationContext(), RegisterScreen.class);
-//            startActivity(intent);
-//            finish();
-//        });
-//
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-//            Intent intent = new Intent(getApplicationContext(), SleepwalkerHome.class);
-//            startActivity(intent);
-//        }
-//    }
-//
-//}
+
 package com.example.safesleep;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -117,15 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
