@@ -298,10 +298,14 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                 DatabaseReference myRef = database.getReference("scheduledawakening");
                 myRef.setValue(timeBeforeMedian);
-                        btnAwake.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // Get the time in milliseconds when the alarm should trigger
+                btnAwake.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(view.getContext());
+                        confirmationDialog.setTitle("Confirm Alarm Setting");
+                        confirmationDialog.setMessage("Do you want to set the alarm?");
+                        confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
+                            try {
                                 addToCalendar(timeBeforeMedian);
 
                                 Calendar calendar = Calendar.getInstance();
@@ -310,26 +314,29 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                                 calendar.set(Calendar.MINUTE, timeBeforeMedianMinutes);
                                 calendar.set(Calendar.SECOND, timeBeforeMedianSeconds);
 
-                                // Create an intent for the AlarmReceiver class
                                 Intent intent = new Intent(view.getContext(), AlarmReceiver.class);
                                 intent.putExtra("ALARM_MESSAGE", "Wake up! It's time!");
 
-                                // Create a PendingIntent to be triggered when the alarm goes off
                                 PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                                // Get the AlarmManager service and set the alarm
                                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                                 if (alarmManager != null) {
                                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                                    // Use setExact() to trigger the alarm at the exact time, even if the device is in doze mode.
-                                    // For repeating alarms, use setRepeating().
                                 }
 
-                                // Show a Toast message to confirm that the alarm is set
                                 Toast.makeText(view.getContext(), "Alarm set for " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                // Handle any exceptions that may occur during alarm setting or calendar addition
+                                Toast.makeText(view.getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-
                         });
+                        confirmationDialog.setNegativeButton("No", (dialog, which) -> {
+                            // User declined, do nothing
+                        });
+                        confirmationDialog.show();
+                    }
+                });
+
 
                 // Sleep Time Onclick Listener
                 sleeptime.addValueEventListener(new ValueEventListener() {
