@@ -261,16 +261,26 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     String selectedDate = dateFormat.format(calendar.getTime());
-//                    tvSelectedDate.setText("Selected Date: " + selectedDate);
-//                    tvSelectedDate.setVisibility(View.VISIBLE);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference sleepdatepreference = database.getReference("sleepdatepreference");
-                    sleepdatepreference.setValue(selectedDate);
 
+                    AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this);
+                    confirmationDialog.setTitle("Confirm Date Change");
+                    confirmationDialog.setMessage("Do you want to change the preffered date?");
+                    confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference sleepdatepreference = database.getReference("sleepdatepreference");
+                        sleepdatepreference.setValue(selectedDate);
+
+                        // You can display a success message or perform other actions here
+                    });
+                    confirmationDialog.setNegativeButton("No", (dialog, which) -> {
+                        // User chose not to add the data, you can handle this as needed
+                    });
+                    confirmationDialog.show();
                 }, year, month, day);
 
         datePickerDialog.show();
     }
+
 
     // show time picker option to select the time
     public void showTimePicker(View view) {
@@ -284,17 +294,26 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     String selectedTime = timeFormat.format(calendar.getTime());
-//                    tvSelectedTime.setText("Selected Time: " + selectedTime);
-//                    tvSelectedTime.setVisibility(View.VISIBLE);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference sleeptimepreference = database.getReference("sleeptimepreference");
-                    sleeptimepreference.setValue(selectedTime);
 
+                    AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this);
+                    confirmationDialog.setTitle("Confirm Time Change");
+                    confirmationDialog.setMessage("Do you want to change the time of sleep preference?");
+                    confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference sleeptimepreference = database.getReference("sleeptimepreference");
+                        sleeptimepreference.setValue(selectedTime);
 
+                        // You can display a success message or perform other actions here
+                    });
+                    confirmationDialog.setNegativeButton("No", (dialog, which) -> {
+                        // User chose not to add the data, you can handle this as needed
+                    });
+                    confirmationDialog.show();
                 }, hour, minute, true);
 
         timePickerDialog.show();
     }
+
 
     // Time Picker to Awake
     public void showTimePickerAwake(View view) {
@@ -308,15 +327,26 @@ public class SleepPreferences extends AppCompatActivity {
 
                     SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     String selectedTime = timeFormat.format(calendar.getTime());
-//                    tvSelectedAwake.setText("Selected Time: " + selectedTime);
-//                    tvSelectedAwake.setVisibility(View.VISIBLE);
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference awaketimepreference = database.getReference("awaketimepreference");
-                    awaketimepreference.setValue(selectedTime);
+
+                    AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this);
+                    confirmationDialog.setTitle("Confirm Awake Time Change");
+                    confirmationDialog.setMessage("Do you want to change the selected time?");
+                    confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference awaketimepreference = database.getReference("awaketimepreference");
+                        awaketimepreference.setValue(selectedTime);
+
+                        // You can display a success message or perform other actions here
+                    });
+                    confirmationDialog.setNegativeButton("No", (dialog, which) -> {
+                        // User chose not to add the data, you can handle this as needed
+                    });
+                    confirmationDialog.show();
                 }, hour, minute, true);
 
         timePickerDialog.show();
     }
+
     // Function to validate email format
 
     // Regular Epxressions
