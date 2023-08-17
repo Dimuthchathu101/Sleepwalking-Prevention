@@ -39,10 +39,11 @@
         android:theme="@style/Theme.SafeSleep"
         tools:targetApi="31">
         <activity
+            android:name=".TimeAnalysisActivity"
+            android:exported="false" />
+        <activity
             android:name=".SleepPostureActivity"
-            android:exported="false" >
-
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".DoctorSuggestions"
             android:exported="false" />
@@ -88,9 +89,9 @@
         <activity
             android:name=".RegisterScreen"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

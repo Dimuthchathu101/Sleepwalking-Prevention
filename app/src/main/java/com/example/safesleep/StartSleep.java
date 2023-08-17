@@ -70,6 +70,8 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
     String bedtime;
 
+    private DatabaseReference databaseRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +164,58 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         });
 
 
+        databaseRef = FirebaseDatabase.getInstance().getReference();
+
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Get the values from the Firebase database
+                String scheduledAwakeningTime = dataSnapshot.child("scheduledawakening").getValue(String.class);
+                String getUpTimeSuggestion = dataSnapshot.child("getuptimesuggestion").getValue(String.class);
+                String sleepingTimeSuggestion = dataSnapshot.child("sleepingtimesuggestion").getValue(String.class);
+
+                // Convert times to seconds since midnight
+                int scheduledAwakeningSeconds = timeToSeconds(scheduledAwakeningTime);
+                int getUpTimeSeconds = timeToSeconds(getUpTimeSuggestion);
+                int sleepingTimeSeconds = timeToSeconds(sleepingTimeSuggestion);
+
+                // Calculate time differences
+                int sleepingToAwakeningDifference = scheduledAwakeningSeconds - sleepingTimeSeconds;
+                int sleepingToGetUpDifference = getUpTimeSeconds - sleepingTimeSeconds;
+                int awakeningToGetUpDifference = getUpTimeSeconds - scheduledAwakeningSeconds;
+
+                // Calculate the fraction of the difference
+                double fraction = (double) sleepingToAwakeningDifference / sleepingToGetUpDifference;
+
+
+                // Convert time differences to HH:mm:ss format
+                String sleepingToAwakeningDifferenceFormatted = secondsToTimeFormat(sleepingToAwakeningDifference);
+                String sleepingToGetUpDifferenceFormatted = secondsToTimeFormat(sleepingToGetUpDifference);
+                String awakeningToGetUpDifferenceFormatted = secondsToTimeFormat(awakeningToGetUpDifference);
+
+                Toast.makeText(getApplicationContext(), "Fraction of the difference: " + fraction, Toast.LENGTH_LONG).show();
+                //Toast.makeText(StartSleep.this, fraction, Toast.LENGTH_SHORT).show();
+                // Update TextViews with calculated differences
+//                TextView awakeningToSleepingDifferenceTextView = findViewById(R.id.awakeningToSleepingDifferenceTextView);
+//                awakeningToSleepingDifferenceTextView.setText("Time difference between sleeping and scheduled awakening: " + sleepingToAwakeningDifferenceFormatted);
+//
+//                TextView sleepingToGetUpDifferenceTextView = findViewById(R.id.sleepingToGetUpDifferenceTextView);
+//                sleepingToGetUpDifferenceTextView.setText("Time difference between sleeping and getting up: " + sleepingToGetUpDifferenceFormatted);
+//
+//                TextView awakeningToGetUpDifferenceTextView = findViewById(R.id.awakeningToGetUpDifferenceTextView);
+//                awakeningToGetUpDifferenceTextView.setText("Time difference between scheduled awakening and getting up: " + awakeningToGetUpDifferenceFormatted);
+
+//                // Update the fraction TextView
+//                TextView fractionTextView = findViewById(R.id.fractionTextView);
+//                fractionTextView.setText("Fraction of the difference: " + fraction);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
+            }
+        });
+
 
         // Add a ValueEventListener to fetch data from Firebase and update the RecyclerView
         DatabaseReference messagesRef2 = FirebaseDatabase.getInstance().getReference("messages");
@@ -202,6 +256,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Integer> validSecondsSinceMidnightList = new ArrayList<>();
                 Set<Integer> uniqueSecondsSinceMidnightSet = new HashSet<>();
+
 
                 // Define the time period interval (20 minutes in seconds)
                 int timePeriodInterval = 40 * 60;
@@ -298,43 +353,40 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                 DatabaseReference myRef = database.getReference("scheduledawakening");
                 myRef.setValue(timeBeforeMedian);
-                btnAwake.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(view.getContext());
-                        confirmationDialog.setTitle("Confirm Alarm Setting");
-                        confirmationDialog.setMessage("Do you want to set the alarm?");
-                        confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
-                            try {
-                                addToCalendar(timeBeforeMedian);
+                btnAwake.setOnClickListener(view -> {
+                    AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(view.getContext());
+                    confirmationDialog.setTitle("Confirm Alarm Setting");
+                    confirmationDialog.setMessage("Do you want to set the alarm?");
+                    confirmationDialog.setPositiveButton("Yes", (dialog, which) -> {
+                        try {
+                            addToCalendar(timeBeforeMedian);
 
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.setTimeInMillis(System.currentTimeMillis());
-                                calendar.set(Calendar.HOUR_OF_DAY, timeBeforeMedianHours);
-                                calendar.set(Calendar.MINUTE, timeBeforeMedianMinutes);
-                                calendar.set(Calendar.SECOND, timeBeforeMedianSeconds);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(System.currentTimeMillis());
+                            calendar.set(Calendar.HOUR_OF_DAY, timeBeforeMedianHours);
+                            calendar.set(Calendar.MINUTE, timeBeforeMedianMinutes);
+                            calendar.set(Calendar.SECOND, timeBeforeMedianSeconds);
 
-                                Intent intent = new Intent(view.getContext(), AlarmReceiver.class);
-                                intent.putExtra("ALARM_MESSAGE", "Wake up! It's time!");
+                            Intent intent = new Intent(view.getContext(), AlarmReceiver.class);
+                            intent.putExtra("ALARM_MESSAGE", "Wake up! It's time!");
 
-                                PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                                if (alarmManager != null) {
-                                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                                }
-
-                                Toast.makeText(view.getContext(), "Alarm set for " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                // Handle any exceptions that may occur during alarm setting or calendar addition
-                                Toast.makeText(view.getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                            if (alarmManager != null) {
+                                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                             }
-                        });
-                        confirmationDialog.setNegativeButton("No", (dialog, which) -> {
-                            // User declined, do nothing
-                        });
-                        confirmationDialog.show();
-                    }
+
+                            Toast.makeText(view.getContext(), "Alarm set for " + timeBeforeMedian, Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            // Handle any exceptions that may occur during alarm setting or calendar addition
+                            Toast.makeText(view.getContext(), "An error occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    confirmationDialog.setNegativeButton("No", (dialog, which) -> {
+                        // User declined, do nothing
+                    });
+                    confirmationDialog.show();
                 });
 
 
@@ -677,37 +729,38 @@ public void onSensorChanged(SensorEvent sensorEvent) {
 
                 try {
                     Thread.sleep(10000);
+                    caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            try {
+                                // This method is called once with the initial value and again
+                                // whenever data at this location is updated.
+                                String value = dataSnapshot.getValue(String.class);
+
+                                try {
+                                    Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
+                                    intent.putExtra("phoneNumber", value);
+                                    intent.putExtra("startTime", 1616048600000L);  // You might want to replace this timestamp with the correct value
+                                    startActivity(intent);
+                                } catch (Exception e) {
+                                    Log.e("TAG", "Error creating intent or starting activity: " + e.getMessage());
+                                }
+                            } catch (Exception e) {
+                                Log.e("TAG", "Error reading data: " + e.getMessage());
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.w("TAG", "Failed to read value.", error.toException());
+                        }
+                    });
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        try {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
-                            String value = dataSnapshot.getValue(String.class);
 
-                            try {
-                                Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
-                                intent.putExtra("phoneNumber", value);
-                                intent.putExtra("startTime", 1616048600000L);  // You might want to replace this timestamp with the correct value
-                                startActivity(intent);
-                            } catch (Exception e) {
-                                Log.e("TAG", "Error creating intent or starting activity: " + e.getMessage());
-                            }
-                        } catch (Exception e) {
-                            Log.e("TAG", "Error reading data: " + e.getMessage());
-                        }
-                    }
-
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w("TAG", "Failed to read value.", error.toException());
-                    }
-                });
 
 
                 // Update the Firebase database with the new message entry
@@ -741,6 +794,21 @@ public void onSensorChanged(SensorEvent sensorEvent) {
         // Format the current time as a unique key (e.g., "yyyyMMdd_HHmmss")
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         return sdf.format(currentTime);
+    }
+
+    private int timeToSeconds(String time) {
+        String[] parts = time.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        int seconds = Integer.parseInt(parts[2]);
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    private String secondsToTimeFormat(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int secs = seconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
     // This method is called when there is a change in accuracy of the sensors
