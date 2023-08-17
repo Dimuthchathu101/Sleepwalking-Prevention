@@ -17,8 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DoctorSuggestions extends AppCompatActivity {
 
-    /**Firebase Database Options
-     * */
+    /**
+     * Firebase Database Options
+     */
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference getuptimesuggestion = database.getReference("getuptimesuggestion");
     DatabaseReference scheduledawakening = database.getReference("scheduledawakening");
@@ -26,15 +27,16 @@ public class DoctorSuggestions extends AppCompatActivity {
     DatabaseReference doctoradvise = database.getReference("doctoradvise");
 
     /**
-     * Edit Text */
+     * Edit Text
+     */
     EditText doctorrecomendations;
     EditText suggestedscheduledawake;
     EditText suggestedawake;
     EditText suggestedsleep;
 
-    Button btndoctorupdate,navigatebackdoctorsugg;
+    Button btndoctorupdate, navigatebackdoctorsugg;
 
-    TextView suggestedcurrentrecomendations,suggestioncurrentwalk, suggestioncurrentawake, suggestionstxtsleeptime ;
+    TextView suggestedcurrentrecomendations, suggestioncurrentwalk, suggestioncurrentawake, suggestionstxtsleeptime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +168,7 @@ public class DoctorSuggestions extends AppCompatActivity {
         // Button Doctor Update
         btndoctorupdate.setOnClickListener(view -> {
             String suggestion = String.valueOf(suggestedcurrentrecomendations.getText());
-            doctoradvise.setValue(" "+suggestion);
+            doctoradvise.setValue(" " + suggestion);
         });
 //
         // navigate to doctor suggestions

@@ -47,7 +47,7 @@ public class UploadActivity extends AppCompatActivity {
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         uri = data.getData();
                         uploadImage.setImageURI(uri);
@@ -67,7 +67,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     // Save Data
-    public void saveData(){
+    public void saveData() {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
                 .child(uri.getLastPathSegment());
@@ -75,7 +75,7 @@ public class UploadActivity extends AppCompatActivity {
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
 
             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-            while (!uriTask.isComplete());
+            while (!uriTask.isComplete()) ;
             Uri urlImage = uriTask.getResult();
             imageURL = urlImage.toString();
             uploadData();
@@ -86,7 +86,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     // Upload Data
-    public void uploadData(){
+    public void uploadData() {
 
         String title = uploadTopic.getText().toString();
         String desc = uploadDesc.getText().toString();
@@ -101,7 +101,7 @@ public class UploadActivity extends AppCompatActivity {
 
         FirebaseDatabase.getInstance().getReference("Android Tutorials").child(currentDate)
                 .setValue(dataClass).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Toast.makeText(UploadActivity.this, "Saved", Toast.LENGTH_SHORT).show();
                         finish();
                     }

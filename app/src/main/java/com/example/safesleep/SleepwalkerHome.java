@@ -33,7 +33,7 @@ public class SleepwalkerHome extends AppCompatActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private boolean shouldCheckMedian = true;
 
-    Button btnPrferences, btnRecords,btnTrack;
+    Button btnPrferences, btnRecords, btnTrack;
     TextView suggestion01, suggestion02, suggestion04, suggestion05;
 
     @Override
@@ -71,7 +71,6 @@ public class SleepwalkerHome extends AppCompatActivity {
         DatabaseReference awakeTime = database.getReference("scheduledawakening");
         DatabaseReference sleeptime = database.getReference("getuptimesuggestion");
         DatabaseReference doctoradvise = database.getReference("doctoradvise");
-
 
 
         // Sleepwalker Time
@@ -261,58 +260,58 @@ public class SleepwalkerHome extends AppCompatActivity {
     }
 
     // Check Median Time
-private void checkMedianTime(String medianTime) {
-    if (shouldCheckMedian) {
-        Calendar currentTime = Calendar.getInstance();
-        int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = currentTime.get(Calendar.MINUTE);
-        int currentSecond = currentTime.get(Calendar.SECOND);
+    private void checkMedianTime(String medianTime) {
+        if (shouldCheckMedian) {
+            Calendar currentTime = Calendar.getInstance();
+            int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+            int currentMinute = currentTime.get(Calendar.MINUTE);
+            int currentSecond = currentTime.get(Calendar.SECOND);
 
-        String currentTimeFormatted = String.format("%02d:%02d:%02d", currentHour, currentMinute, currentSecond);
+            String currentTimeFormatted = String.format("%02d:%02d:%02d", currentHour, currentMinute, currentSecond);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        try {
-            Date medianTimeDate = sdf.parse(medianTime);
-            Date currentTimeDate = sdf.parse(currentTimeFormatted);
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            try {
+                Date medianTimeDate = sdf.parse(medianTime);
+                Date currentTimeDate = sdf.parse(currentTimeFormatted);
 
-            // Calculate the difference between median time and current time in seconds
-            long timeDifference = (currentTimeDate.getTime() - medianTimeDate.getTime()) / 1000;
+                // Calculate the difference between median time and current time in seconds
+                long timeDifference = (currentTimeDate.getTime() - medianTimeDate.getTime()) / 1000;
 
-            // checking for 30 seconds interval
-            if (Math.abs(timeDifference) <= 30) { // Check if the difference is within 30 seconds
-                caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        String value = dataSnapshot.getValue(String.class);
-                        Intent intent = new Intent(SleepwalkerHome.this, AutomaticCallActivity.class);
-                        intent.putExtra("phoneNumber", value);
-                        intent.putExtra("startTime", 1616048600000L);
-                        startActivity(intent);
-                    }
+                // checking for 30 seconds interval
+                if (Math.abs(timeDifference) <= 30) { // Check if the difference is within 30 seconds
+                    caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            String value = dataSnapshot.getValue(String.class);
+                            Intent intent = new Intent(SleepwalkerHome.this, AutomaticCallActivity.class);
+                            intent.putExtra("phoneNumber", value);
+                            intent.putExtra("startTime", 1616048600000L);
+                            startActivity(intent);
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w("TAG", "Failed to read value.", error.toException());
-                    }
-                });
-                shouldCheckMedian = false; // Stop checking
-            } else {
-                //Toast.makeText(this, "This is not your sleepwalking time", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.w("TAG", "Failed to read value.", error.toException());
+                        }
+                    });
+                    shouldCheckMedian = false; // Stop checking
+                } else {
+                    //Toast.makeText(this, "This is not your sleepwalking time", Toast.LENGTH_SHORT).show();
+                }
+
+                // Check again after a delay (every 0.5 seconds)
+                handler.postDelayed(() -> checkMedianTime(medianTime), 500);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-
-            // Check again after a delay (every 0.5 seconds)
-            handler.postDelayed(() -> checkMedianTime(medianTime), 500);
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
-}
 
 
     @Override

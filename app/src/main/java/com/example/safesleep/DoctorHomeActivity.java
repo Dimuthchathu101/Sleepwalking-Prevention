@@ -47,7 +47,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
 //                Log.d(TAG, "Value is: " + value);
-                tvsuggestion03.setText("Sleepwalker 01 Sleep In Time : "+ value);
+                tvsuggestion03.setText("Sleepwalker 01 Sleep In Time : " + value);
                 tvsuggestion03.setTextColor(Color.BLACK);
                 tvsuggestion03.setTextSize(18);
 
@@ -68,7 +68,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
 //                Log.d(TAG, "Value is: " + value);
-                tvSuggestion04.setText("Sleepwalker 01 Scheduled Awakening : "+ value);
+                tvSuggestion04.setText("Sleepwalker 01 Scheduled Awakening : " + value);
                 tvSuggestion04.setTextColor(Color.BLACK);
                 tvSuggestion04.setTextSize(18);
 
@@ -88,14 +88,13 @@ public class DoctorHomeActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
 //                Log.d(TAG, "Value is: " + value);
-                tvsuggestion01.setText("Sleepwalker 01 Last Episode Detected : "+ value);
+                tvsuggestion01.setText("Sleepwalker 01 Last Episode Detected : " + value);
                 tvsuggestion01.setTextColor(Color.BLACK);
                 tvsuggestion01.setTextSize(18);
 
-                tvSuggestion2.setText("Sleepwalker 02 Last Episode Detected : "+ value);
+                tvSuggestion2.setText("Sleepwalker 02 Last Episode Detected : " + value);
                 tvSuggestion2.setTextColor(Color.BLACK);
                 tvSuggestion2.setTextSize(18);
-
 
 
             }

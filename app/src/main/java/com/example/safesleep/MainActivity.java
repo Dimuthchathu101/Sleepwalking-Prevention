@@ -101,9 +101,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // On Start Method
+
     /**
      * In this method user will be directed to home screen of doctor or sleepwalker
-     * */
+     */
     @Override
     public void onStart() {
         super.onStart();

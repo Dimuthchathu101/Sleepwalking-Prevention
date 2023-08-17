@@ -54,35 +54,35 @@ public class SleepRecords extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
 
-@Override
-public void onDataChange(@NonNull DataSnapshot snapshot) {
-    dataList.clear();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataList.clear();
 
-    for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-        // Check if the data exists
-        if (itemSnapshot.exists()) {
-            DataClass dataClass = itemSnapshot.getValue(DataClass.class);
-            if (dataClass != null) {
-                dataClass.setKey(itemSnapshot.getKey());
-                dataList.add(dataClass);
-            } else {
-                // Display error toast for parsing failure
-                Toast.makeText(SleepRecords.this, "Failed to parse DataClass from snapshot: " + itemSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    // Check if the data exists
+                    if (itemSnapshot.exists()) {
+                        DataClass dataClass = itemSnapshot.getValue(DataClass.class);
+                        if (dataClass != null) {
+                            dataClass.setKey(itemSnapshot.getKey());
+                            dataList.add(dataClass);
+                        } else {
+                            // Display error toast for parsing failure
+                            Toast.makeText(SleepRecords.this, "Failed to parse DataClass from snapshot: " + itemSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        // Display error toast for snapshot not existing
+                        Toast.makeText(SleepRecords.this, "Snapshot does not exist.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                // Notify the adapter about data changes
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                } else {
+                    // Display error toast for null adapter
+                    Toast.makeText(SleepRecords.this, "Adapter is null.", Toast.LENGTH_SHORT).show();
+                }
             }
-        } else {
-            // Display error toast for snapshot not existing
-            Toast.makeText(SleepRecords.this, "Snapshot does not exist.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Notify the adapter about data changes
-    if (adapter != null) {
-        adapter.notifyDataSetChanged();
-    } else {
-        // Display error toast for null adapter
-        Toast.makeText(SleepRecords.this, "Adapter is null.", Toast.LENGTH_SHORT).show();
-    }
-}
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

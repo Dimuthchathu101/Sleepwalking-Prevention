@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 intent.putExtra("Image", dataList.get(holder.getAdapterPosition()).getDataImage());
                 intent.putExtra("Description", dataList.get(holder.getAdapterPosition()).getDataDesc());
                 intent.putExtra("Title", dataList.get(holder.getAdapterPosition()).getDataTitle());
-                intent.putExtra("Key",dataList.get(holder.getAdapterPosition()).getKey());
+                intent.putExtra("Key", dataList.get(holder.getAdapterPosition()).getKey());
                 intent.putExtra("Language", dataList.get(holder.getAdapterPosition()).getDataLang());
                 context.startActivity(intent);
             }
@@ -61,13 +61,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return dataList.size();
     }
 
-    public void searchDataList(ArrayList<DataClass> searchList){
+    public void searchDataList(ArrayList<DataClass> searchList) {
         dataList = searchList;
         notifyDataSetChanged();
     }
 }
 
-class MyViewHolder extends RecyclerView.ViewHolder{
+class MyViewHolder extends RecyclerView.ViewHolder {
 
     ImageView recImage;
     TextView recTitle, recDesc, recLang;

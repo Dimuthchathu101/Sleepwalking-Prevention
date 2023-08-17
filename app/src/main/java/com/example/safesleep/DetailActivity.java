@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // Get Bundle Details
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             detailDesc.setText(bundle.getString("Description"));
             detailTitle.setText(bundle.getString("Title"));
             detailLang.setText(bundle.getString("Language"));

@@ -43,7 +43,7 @@ public class SleepPreferences extends AppCompatActivity {
     // Firebase Options
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
-    DatabaseReference caretakerEmailFirebase= database.getReference("caretakeremail");
+    DatabaseReference caretakerEmailFirebase = database.getReference("caretakeremail");
 
 
     @Override
@@ -364,5 +364,5 @@ public class SleepPreferences extends AppCompatActivity {
         String regex = "^[0-9]{10}$";
         return mobile.matches(regex);
     }
-    
+
 }

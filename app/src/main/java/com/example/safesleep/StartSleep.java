@@ -51,7 +51,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
     // Declaration of variables
     private TextView textViewCounter, textViewDetector;
-    private Button btnStart,btnAwake;
+    private Button btnStart, btnAwake;
     TextView sleepAwakeing;
     private SensorManager sensorManager;
     private Sensor accelerometerSensor; // Use accelerometer sensor
@@ -93,7 +93,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
-        mediaplayer2 = MediaPlayer.create(this,R.raw.fusion);
+        mediaplayer2 = MediaPlayer.create(this, R.raw.fusion);
 
 
         // Database References
@@ -111,6 +111,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         adapter = new MessageAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
+
         // Start Button
         btnStart.setOnClickListener(view -> {
             bedtime = String.valueOf(et_prefeeredTime.getText());
@@ -119,12 +120,77 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 try {
                     int bedtimeValue = Integer.parseInt(bedtime);
 
+
                     if (bedtimeValue >= 6 && bedtimeValue <= 10) {
                         // Build and show a confirmation dialog
                         AlertDialog.Builder builder = new AlertDialog.Builder(StartSleep.this);
                         builder.setTitle("Mindfulness Music");
                         builder.setMessage("Do You Want to Start Sleep Now and Play Mindfulness Music to Prepare You for a Safe Sleep ?");
                         builder.setPositiveButton("OK", (dialog, which) -> {
+
+                            databaseRef = FirebaseDatabase.getInstance().getReference();
+
+                            databaseRef.addValueEventListener(new ValueEventListener() {
+
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    // Get the values from the Firebase database
+                                    String scheduledAwakeningTime = dataSnapshot.child("scheduledawakening").getValue(String.class);
+                                    String getUpTimeSuggestion = dataSnapshot.child("getuptimesuggestion").getValue(String.class);
+                                    String sleepingTimeSuggestion = dataSnapshot.child("sleepingtimesuggestion").getValue(String.class);
+
+                                    // Convert times to seconds since midnight
+                                    int scheduledAwakeningSeconds = timeToSeconds(scheduledAwakeningTime);
+                                    int getUpTimeSeconds = timeToSeconds(getUpTimeSuggestion);
+                                    int sleepingTimeSeconds = timeToSeconds(sleepingTimeSuggestion);
+
+                                    // Calculate time differences
+                                    int sleepingToAwakeningDifference = scheduledAwakeningSeconds - sleepingTimeSeconds;
+                                    int sleepingToGetUpDifference = getUpTimeSeconds - sleepingTimeSeconds;
+
+                                    // Calculate the fraction of the difference
+                                    double fraction = (double) sleepingToAwakeningDifference / sleepingToGetUpDifference;
+
+                                    // Assuming you have the preference value in hours as a decimal number (e.g., 2.556666556)
+                                    double preferenceValueInHours = fraction * bedtimeValue;
+
+                                    // Get the current time
+                                    Calendar currentTime = Calendar.getInstance();
+                                    int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+                                    int currentMinute = currentTime.get(Calendar.MINUTE);
+
+                                    // Calculate the preferred awakening time in hours after the current time
+                                    int preferredAwakeningHour = (int) (currentHour + preferenceValueInHours);
+                                    int preferredAwakeningMinute = currentMinute;
+
+                                    // Adjust the preferred awakening hour and minute if necessary
+                                    if (preferredAwakeningHour >= 24) {
+                                        preferredAwakeningHour -= 24;
+                                    }
+
+                                    // Convert preferred awakening time to a formatted time string
+                                    String preferredAwakeningTimeString = String.format("%02d:%02d", preferredAwakeningHour, preferredAwakeningMinute);
+
+                                    Toast.makeText(getApplicationContext(), "You will be awakened at " + preferredAwakeningTimeString, Toast.LENGTH_LONG).show();
+                                }
+
+                                private String secondsToTime(int seconds) {
+                                    int hours = seconds / 3600;
+                                    int minutes = (seconds % 3600) / 60;
+                                    int secs = seconds % 60;
+
+                                    // Format hours, minutes, and seconds into a time string
+                                    String timeString = String.format("%02d:%02d:%02d", hours, minutes, secs);
+
+                                    return timeString;
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
+                                }
+                            });
+
                             try {
                                 if (mediaplayer2.isPlaying()) {
                                     mediaplayer2.stop();
@@ -160,59 +226,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
             } else {
                 // Show a toast indicating empty input
                 Toast.makeText(getApplicationContext(), "Bedtime value is empty", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        databaseRef = FirebaseDatabase.getInstance().getReference();
-
-        databaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Get the values from the Firebase database
-                String scheduledAwakeningTime = dataSnapshot.child("scheduledawakening").getValue(String.class);
-                String getUpTimeSuggestion = dataSnapshot.child("getuptimesuggestion").getValue(String.class);
-                String sleepingTimeSuggestion = dataSnapshot.child("sleepingtimesuggestion").getValue(String.class);
-
-                // Convert times to seconds since midnight
-                int scheduledAwakeningSeconds = timeToSeconds(scheduledAwakeningTime);
-                int getUpTimeSeconds = timeToSeconds(getUpTimeSuggestion);
-                int sleepingTimeSeconds = timeToSeconds(sleepingTimeSuggestion);
-
-                // Calculate time differences
-                int sleepingToAwakeningDifference = scheduledAwakeningSeconds - sleepingTimeSeconds;
-                int sleepingToGetUpDifference = getUpTimeSeconds - sleepingTimeSeconds;
-                int awakeningToGetUpDifference = getUpTimeSeconds - scheduledAwakeningSeconds;
-
-                // Calculate the fraction of the difference
-                double fraction = (double) sleepingToAwakeningDifference / sleepingToGetUpDifference;
-
-
-                // Convert time differences to HH:mm:ss format
-                String sleepingToAwakeningDifferenceFormatted = secondsToTimeFormat(sleepingToAwakeningDifference);
-                String sleepingToGetUpDifferenceFormatted = secondsToTimeFormat(sleepingToGetUpDifference);
-                String awakeningToGetUpDifferenceFormatted = secondsToTimeFormat(awakeningToGetUpDifference);
-
-                Toast.makeText(getApplicationContext(), "Fraction of the difference: " + fraction, Toast.LENGTH_LONG).show();
-                //Toast.makeText(StartSleep.this, fraction, Toast.LENGTH_SHORT).show();
-                // Update TextViews with calculated differences
-//                TextView awakeningToSleepingDifferenceTextView = findViewById(R.id.awakeningToSleepingDifferenceTextView);
-//                awakeningToSleepingDifferenceTextView.setText("Time difference between sleeping and scheduled awakening: " + sleepingToAwakeningDifferenceFormatted);
-//
-//                TextView sleepingToGetUpDifferenceTextView = findViewById(R.id.sleepingToGetUpDifferenceTextView);
-//                sleepingToGetUpDifferenceTextView.setText("Time difference between sleeping and getting up: " + sleepingToGetUpDifferenceFormatted);
-//
-//                TextView awakeningToGetUpDifferenceTextView = findViewById(R.id.awakeningToGetUpDifferenceTextView);
-//                awakeningToGetUpDifferenceTextView.setText("Time difference between scheduled awakening and getting up: " + awakeningToGetUpDifferenceFormatted);
-
-//                // Update the fraction TextView
-//                TextView fractionTextView = findViewById(R.id.fractionTextView);
-//                fractionTextView.setText("Fraction of the difference: " + fraction);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
 
@@ -579,7 +592,7 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                         int medianSecondsSinceMidnight = validSecondsSinceMidnightList.get(medianIndex);
 
                         // Calculate the time that is 30 minutes before the median time
-                        int timeBeforeMedianSecondsSinceMidnight = medianSecondsSinceMidnight ;
+                        int timeBeforeMedianSecondsSinceMidnight = medianSecondsSinceMidnight;
                         if (timeBeforeMedianSecondsSinceMidnight < 0) {
                             timeBeforeMedianSecondsSinceMidnight += 24 * 3600; // Account for wrapping around to the previous day
                         }
@@ -604,7 +617,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                     }
 
                 });
-
 
 
 //                new WekaClassificationTask().execute(dataList);
@@ -697,87 +709,86 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
     /**
      * This method is very essential when handling sensor data
-     * */
-public void onSensorChanged(SensorEvent sensorEvent) {
+     */
+    public void onSensorChanged(SensorEvent sensorEvent) {
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
-    DatabaseReference caretakerEmailFirebase= database.getReference("caretakeremail");
-    if (isAccelerometerSensorPresent && sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-        float x = sensorEvent.values[0];
-        float y = sensorEvent.values[1];
-        float z = sensorEvent.values[2];
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
+        DatabaseReference caretakerEmailFirebase = database.getReference("caretakeremail");
+        if (isAccelerometerSensorPresent && sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
 
-        // Calculate the magnitude of acceleration
-        float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
+            // Calculate the magnitude of acceleration
+            float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
 
-        // Assuming a threshold of 10 units for a step (you can adjust this value)
-        if (acceleration > 15) {
-            stepCount++;
-            textViewCounter.setText("Steps Detected: " + String.valueOf(stepCount));
+            // Assuming a threshold of 10 units for a step (you can adjust this value)
+            if (acceleration > 15) {
+                stepCount++;
+                textViewCounter.setText("Steps Detected: " + String.valueOf(stepCount));
 
-            if (stepCount > 2) {
-                String currentTime = getCurrentTime();
+                if (stepCount > 2) {
+                    String currentTime = getCurrentTime();
 
-                // Add the message and time to the messagesMap with a unique key
-                String messageKey = currentTime; // Use the formatted current time as the key
-                messagesMap.put(messageKey, messageKey);
+                    // Add the message and time to the messagesMap with a unique key
+                    String messageKey = currentTime; // Use the formatted current time as the key
+                    messagesMap.put(messageKey, messageKey);
 
-                mediaPlayer.start();
-                // Show a normal Toast with the message and time
-                Toast.makeText(StartSleep.this, messageKey + " at " + currentTime, Toast.LENGTH_LONG).show();
+                    mediaPlayer.start();
+                    // Show a normal Toast with the message and time
+                    Toast.makeText(StartSleep.this, messageKey + " at " + currentTime, Toast.LENGTH_LONG).show();
 
-                try {
-                    Thread.sleep(10000);
-                    caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            try {
-                                // This method is called once with the initial value and again
-                                // whenever data at this location is updated.
-                                String value = dataSnapshot.getValue(String.class);
-
+                    try {
+                        Thread.sleep(10000);
+                        caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
                                 try {
-                                    Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
-                                    intent.putExtra("phoneNumber", value);
-                                    intent.putExtra("startTime", 1616048600000L);  // You might want to replace this timestamp with the correct value
-                                    startActivity(intent);
+                                    // This method is called once with the initial value and again
+                                    // whenever data at this location is updated.
+                                    String value = dataSnapshot.getValue(String.class);
+
+                                    try {
+                                        Intent intent = new Intent(StartSleep.this, AutomaticCallActivity.class);
+                                        intent.putExtra("phoneNumber", value);
+                                        intent.putExtra("startTime", 1616048600000L);  // You might want to replace this timestamp with the correct value
+                                        startActivity(intent);
+                                    } catch (Exception e) {
+                                        Log.e("TAG", "Error creating intent or starting activity: " + e.getMessage());
+                                    }
                                 } catch (Exception e) {
-                                    Log.e("TAG", "Error creating intent or starting activity: " + e.getMessage());
+                                    Log.e("TAG", "Error reading data: " + e.getMessage());
                                 }
-                            } catch (Exception e) {
-                                Log.e("TAG", "Error reading data: " + e.getMessage());
                             }
-                        }
 
 
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.w("TAG", "Failed to read value.", error.toException());
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value
+                                Log.w("TAG", "Failed to read value.", error.toException());
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    // Update the Firebase database with the new message entry
+
+                    DatabaseReference myRef = database.getReference("messages");
+                    myRef.child(messageKey).setValue(messageKey);
+
+                    DatabaseReference lastepisode = database.getReference("lastepisode");
+
+                    lastepisode.setValue(messageKey);
+
+                    // Assuming you have initialized the "mediaPlayer" variable
+
                 }
-
-
-
-                // Update the Firebase database with the new message entry
-
-                DatabaseReference myRef = database.getReference("messages");
-                myRef.child(messageKey).setValue(messageKey);
-
-                DatabaseReference lastepisode = database.getReference("lastepisode");
-
-                lastepisode.setValue(messageKey);
-
-                // Assuming you have initialized the "mediaPlayer" variable
-
             }
         }
     }
-}
 
     @Override
     public void onDestroy() {

@@ -1,7 +1,6 @@
 package com.example.safesleep;
 
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;
@@ -27,6 +26,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -126,101 +126,101 @@ public class SleepPostureActivity extends AppCompatActivity {
         @Override
         public void run() {
             poseDetector.process(InputImage.fromBitmap(bitmapArrayList.get(0), 0)).addOnSuccessListener(new OnSuccessListener<Pose>() {
-                @Override
-                public void onSuccess(Pose pose) {
-                    try {
-                        if (pose != null) {
-                            poseArrayList.add(pose);
-                            PoseLandmark leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
-                            PoseLandmark rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
-                            PoseLandmark leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
-                            PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
-                            PoseLandmark leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
-                            PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
+                        @Override
+                        public void onSuccess(Pose pose) {
+                            try {
+                                if (pose != null) {
+                                    poseArrayList.add(pose);
+                                    PoseLandmark leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER);
+                                    PoseLandmark rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER);
+                                    PoseLandmark leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP);
+                                    PoseLandmark rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP);
+                                    PoseLandmark leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE);
+                                    PoseLandmark rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE);
 
-                            if (leftShoulder != null && rightShoulder != null && leftHip != null && rightHip != null
-                                    && leftKnee != null && rightKnee != null) {
-                                // Determine sleep posture based on landmark positions
-                                try {
-                                    boolean isSleepingOnSide = leftShoulder.getPosition().y > rightShoulder.getPosition().y
-                                            || rightShoulder.getPosition().y > leftShoulder.getPosition().y;
+                                    if (leftShoulder != null && rightShoulder != null && leftHip != null && rightHip != null
+                                            && leftKnee != null && rightKnee != null) {
+                                        // Determine sleep posture based on landmark positions
+                                        try {
+                                            boolean isSleepingOnSide = leftShoulder.getPosition().y > rightShoulder.getPosition().y
+                                                    || rightShoulder.getPosition().y > leftShoulder.getPosition().y;
 
-                                    boolean isSleepingOnFront = leftHip.getPosition().y > rightHip.getPosition().y
-                                            && leftKnee.getPosition().y > rightKnee.getPosition().y;
+                                            boolean isSleepingOnFront = leftHip.getPosition().y > rightHip.getPosition().y
+                                                    && leftKnee.getPosition().y > rightKnee.getPosition().y;
 
-                                    boolean isSleepingOnBack = rightHip.getPosition().y > leftHip.getPosition().y
-                                            && rightKnee.getPosition().y > leftKnee.getPosition().y;
+                                            boolean isSleepingOnBack = rightHip.getPosition().y > leftHip.getPosition().y
+                                                    && rightKnee.getPosition().y > leftKnee.getPosition().y;
 
-                                    if (isSleepingOnSide) {
+                                            if (isSleepingOnSide) {
 //                                        Toast.makeText(SleepPostureActivity.this, "Sleeping on Side", Toast.LENGTH_SHORT).show();
-                                    } else if (isSleepingOnFront) {
+                                            } else if (isSleepingOnFront) {
 //                                        Toast.makeText(SleepPostureActivity.this, "Sleeping on Front", Toast.LENGTH_SHORT).show();
-                                    } else if (isSleepingOnBack) {
+                                            } else if (isSleepingOnBack) {
 //                                        Toast.makeText(SleepPostureActivity.this, "Sleeping on Back", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    // Handle exceptions related to pose landmark comparison
-                                }
-                                Thread.sleep(2000);
-                            } else {
-                                // Handle the case where some landmarks are missing
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                String currentTime = getCurrentTime();
-                                String messageKey = currentTime; // Use the formatted current time as the key
-                                messagesMap.put(messageKey, messageKey);
-                                DatabaseReference myRef = database.getReference("messages");
-                                myRef.child(messageKey).setValue(messageKey);
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            // Handle exceptions related to pose landmark comparison
+                                        }
+                                        Thread.sleep(2000);
+                                    } else {
+                                        // Handle the case where some landmarks are missing
+                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                        String currentTime = getCurrentTime();
+                                        String messageKey = currentTime; // Use the formatted current time as the key
+                                        messagesMap.put(messageKey, messageKey);
+                                        DatabaseReference myRef = database.getReference("messages");
+                                        myRef.child(messageKey).setValue(messageKey);
 //                                Toast.makeText(SleepPostureActivity.this, "Incomplete pose data", Toast.LENGTH_SHORT).show();
 //                                mediaPlayer = MediaPlayer.create(SleepPostureActivity.this, R.raw.alarm);
 
-                                DatabaseReference lastepisode = database.getReference("lastepisode");
+                                        DatabaseReference lastepisode = database.getReference("lastepisode");
 
-                                lastepisode.setValue(messageKey);
+                                        lastepisode.setValue(messageKey);
 
-                                DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
-                                caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // This method is called once with the initial value and again
-                                        // whenever data at this location is updated.
-                                        String value = dataSnapshot.getValue(String.class);
-                                        Intent intent = new Intent(SleepPostureActivity.this, AutomaticCallActivity.class);
-                                        intent.putExtra("phoneNumber", value);
-                                        intent.putExtra("startTime", 1616048600000L);
+                                        DatabaseReference caretakerMobileFirebase = database.getReference("caretakermobile");
+                                        caretakerMobileFirebase.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                // This method is called once with the initial value and again
+                                                // whenever data at this location is updated.
+                                                String value = dataSnapshot.getValue(String.class);
+                                                Intent intent = new Intent(SleepPostureActivity.this, AutomaticCallActivity.class);
+                                                intent.putExtra("phoneNumber", value);
+                                                intent.putExtra("startTime", 1616048600000L);
+                                                startActivity(intent);
+                                                finish();
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError error) {
+                                                // Failed to read value
+                                                Log.w("TAG", "Failed to read value.", error.toException());
+                                            }
+                                        });
+
+                                        Intent intent = new Intent(SleepPostureActivity.this, SleepwalkerHome.class);
                                         startActivity(intent);
+
+                                        // Finish the current activity
                                         finish();
 
                                     }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError error) {
-                                        // Failed to read value
-                                        Log.w("TAG", "Failed to read value.", error.toException());
-                                    }
-                                });
-
-                                Intent intent = new Intent(SleepPostureActivity.this, SleepwalkerHome.class);
-                                startActivity(intent);
-
-                                // Finish the current activity
-                                finish();
-
+                                } else {
+                                    // Handle the case where no pose was detected
+                                    Toast.makeText(SleepPostureActivity.this, "No pose detected", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                // Handle any exceptions that may occur during pose processing
                             }
-                        } else {
-                            // Handle the case where no pose was detected
-                            Toast.makeText(SleepPostureActivity.this, "No pose detected", Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        // Handle any exceptions that may occur during pose processing
-                    }
-                }
-            })
-.addOnFailureListener(e -> {
-    // Handle failure
-    Toast.makeText(SleepPostureActivity.this, "Pose detection failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-});
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                        Toast.makeText(SleepPostureActivity.this, "Pose detection failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
         }
     };
 
@@ -266,8 +266,8 @@ public class SleepPostureActivity extends AppCompatActivity {
 
             Matrix matrix = new Matrix();
             matrix.postRotate(270);
-            matrix.postScale(-1,1);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap,0,0,imageProxy.getWidth(), imageProxy.getHeight(),matrix,false);
+            matrix.postScale(-1, 1);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, imageProxy.getWidth(), imageProxy.getHeight(), matrix, false);
 
             bitmapArrayList.add(rotatedBitmap);
 
@@ -275,12 +275,12 @@ public class SleepPostureActivity extends AppCompatActivity {
                 canvas = new Canvas(bitmapArrayList.get(0));
 
                 for (PoseLandmark poseLandmark : poseArrayList.get(0).getAllPoseLandmarks()) {
-                    canvas.drawCircle(poseLandmark.getPosition().x, poseLandmark.getPosition().y,5,mPaint);
+                    canvas.drawCircle(poseLandmark.getPosition().x, poseLandmark.getPosition().y, 5, mPaint);
                 }
 
                 bitmap4DisplayArrayList.clear();
                 bitmap4DisplayArrayList.add(bitmapArrayList.get(0));
-                bitmap4Save = bitmapArrayList.get(bitmapArrayList.size()-1);
+                bitmap4Save = bitmapArrayList.get(bitmapArrayList.size() - 1);
                 bitmapArrayList.clear();
                 bitmapArrayList.add(bitmap4Save);
                 poseArrayList.clear();
@@ -298,7 +298,7 @@ public class SleepPostureActivity extends AppCompatActivity {
             imageProxy.close();
         });
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageAnalysis, preview);
     }
 
     // Obtaining the required permissions

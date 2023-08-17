@@ -189,6 +189,7 @@ public class RegisterScreen extends AppCompatActivity {
                     });
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();

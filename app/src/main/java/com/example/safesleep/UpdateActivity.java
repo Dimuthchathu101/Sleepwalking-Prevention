@@ -49,7 +49,7 @@ public class UpdateActivity extends AppCompatActivity {
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         uri = data.getData();
                         updateImage.setImageURI(uri);
@@ -59,7 +59,7 @@ public class UpdateActivity extends AppCompatActivity {
                 }
         );
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             Glide.with(UpdateActivity.this).load(bundle.getString("Image")).into(updateImage);
             updateTitle.setText(bundle.getString("Title"));
             updateDesc.setText(bundle.getString("Description"));
@@ -80,20 +80,22 @@ public class UpdateActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
     // Save Data Method
-    public void saveData(){
+    public void saveData() {
         storageReference = FirebaseStorage.getInstance().getReference().child("Android Images").child(uri.getLastPathSegment());
         storageReference.putFile(uri).addOnSuccessListener(taskSnapshot -> {
             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-            while (!uriTask.isComplete());
+            while (!uriTask.isComplete()) ;
             Uri urlImage = uriTask.getResult();
             imageUrl = urlImage.toString();
             updateData();
         }).addOnFailureListener(e -> {
         });
     }
+
     // Update Data Method
-    public void updateData(){
+    public void updateData() {
         title = updateTitle.getText().toString().trim();
         desc = updateDesc.getText().toString().trim();
         lang = updateLang.getText().toString();
@@ -101,7 +103,7 @@ public class UpdateActivity extends AppCompatActivity {
         DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
 
         databaseReference.setValue(dataClass).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(oldImageURL);
                 reference.delete();
                 Toast.makeText(UpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();

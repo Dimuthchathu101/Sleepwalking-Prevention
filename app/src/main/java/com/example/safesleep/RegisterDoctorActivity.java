@@ -21,9 +21,9 @@ public class RegisterDoctorActivity extends AppCompatActivity {
     // Setting Variables
     Button btnRegister, btnLogin;
     EditText confirmPasswordDoctor;
-    EditText        passworddoctor;
+    EditText passworddoctor;
     EditText smlcRegistrationdoctor;
-    EditText        qualificationsdoctor;
+    EditText qualificationsdoctor;
     EditText emaildoctor;
     EditText usernamedoctor;
     Button signupButtonDoctor;
@@ -116,9 +116,9 @@ public class RegisterDoctorActivity extends AppCompatActivity {
         });
 
 
-
     }
-        @Override
+
+    @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
