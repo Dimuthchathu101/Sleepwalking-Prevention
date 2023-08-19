@@ -170,9 +170,14 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
                                     // Convert preferred awakening time to a formatted time string
                                     String preferredAwakeningTimeString = String.format("%02d:%02d", preferredAwakeningHour, preferredAwakeningMinute);
+                                    DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
+
+                                    newFirebasePreferences.setValue(preferredAwakeningTimeString);
 
                                     Toast.makeText(getApplicationContext(), "You will be awakened at " + preferredAwakeningTimeString, Toast.LENGTH_LONG).show();
                                 }
+
+
 
                                 private String secondsToTime(int seconds) {
                                     int hours = seconds / 3600;
@@ -185,9 +190,40 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                                     return timeString;
                                 }
 
+
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                     Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
+                                }
+                            });
+
+                            DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
+                            newFirebasePreferences.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    String value = snapshot.getValue(String.class);
+                                    Log.d("TAG", "Value is: " + value);
+
+                                    if (value != null) {
+                                        int preferredAwakeningHour;
+                                        int preferredAwakeningMinute;
+
+                                        String[] timeParts = value.split(":");
+                                        if (timeParts.length == 2) {
+                                            preferredAwakeningHour = Integer.parseInt(timeParts[0]);
+                                            preferredAwakeningMinute = Integer.parseInt(timeParts[1]);
+                                        } else {
+                                            return;
+                                        }
+
+                                        long eventTimeInMillis = getEventTimeInMillisSuggestion(preferredAwakeningHour, preferredAwakeningMinute);
+                                        addToCalendarSuggestion(eventTimeInMillis);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    Log.w("TAG", "Failed to read value.", error.toException());
                                 }
                             });
 
@@ -230,6 +266,8 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         });
 
 
+
+
         // Add a ValueEventListener to fetch data from Firebase and update the RecyclerView
         DatabaseReference messagesRef2 = FirebaseDatabase.getInstance().getReference("messages");
         messagesRef2.addValueEventListener(new ValueEventListener() {
@@ -262,6 +300,13 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                 Log.e("Firebase", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
+
+
+        //DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
+
+
+
+
 
         // Database Retreival
         messagesRef.addValueEventListener(new ValueEventListener() {
@@ -820,6 +865,28 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         int minutes = (seconds % 3600) / 60;
         int secs = seconds % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+
+    private void addToCalendarSuggestion(long eventTimeInMillis) {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, "Sleep Awakening Preference")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Time to wake up before sleepwalking")
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, eventTimeInMillis)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, eventTimeInMillis)
+                .putExtra(CalendarContract.Events.ALL_DAY, false)
+                .putExtra(CalendarContract.Events.HAS_ALARM, true);
+
+        startActivity(intent);
+    }
+
+    private long getEventTimeInMillisSuggestion(int hourOfDay, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
     }
 
     // This method is called when there is a change in accuracy of the sensors
