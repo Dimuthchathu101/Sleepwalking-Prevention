@@ -114,7 +114,7 @@ public class SleepPreferences extends AppCompatActivity {
                     String value = dataSnapshot.getValue(String.class);
 
                     try {
-                        tvCaretakerEmail.setText("Current Caretaker Number: " + value);
+                        tvCaretakerEmail.setText("Current Caretaker Email: " + value);
                     } catch (Exception e) {
                         Log.e("TAG", "Error setting text: " + e.getMessage());
                     }

@@ -178,7 +178,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                                 }
 
 
-
                                 private String secondsToTime(int seconds) {
                                     int hours = seconds / 3600;
                                     int minutes = (seconds % 3600) / 60;
@@ -197,35 +196,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
                                 }
                             });
 
-                            DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
-                            newFirebasePreferences.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot snapshot) {
-                                    String value = snapshot.getValue(String.class);
-                                    Log.d("TAG", "Value is: " + value);
-
-                                    if (value != null) {
-                                        int preferredAwakeningHour;
-                                        int preferredAwakeningMinute;
-
-                                        String[] timeParts = value.split(":");
-                                        if (timeParts.length == 2) {
-                                            preferredAwakeningHour = Integer.parseInt(timeParts[0]);
-                                            preferredAwakeningMinute = Integer.parseInt(timeParts[1]);
-                                        } else {
-                                            return;
-                                        }
-
-                                        long eventTimeInMillis = getEventTimeInMillisSuggestion(preferredAwakeningHour, preferredAwakeningMinute);
-                                        addToCalendarSuggestion(eventTimeInMillis);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError error) {
-                                    Log.w("TAG", "Failed to read value.", error.toException());
-                                }
-                            });
 
                             try {
                                 if (mediaplayer2.isPlaying()) {
@@ -266,8 +236,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         });
 
 
-
-
         // Add a ValueEventListener to fetch data from Firebase and update the RecyclerView
         DatabaseReference messagesRef2 = FirebaseDatabase.getInstance().getReference("messages");
         messagesRef2.addValueEventListener(new ValueEventListener() {
@@ -303,9 +271,6 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
 
 
         //DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
-
-
-
 
 
         // Database Retreival
@@ -729,6 +694,39 @@ public class StartSleep extends AppCompatActivity implements SensorEventListener
         }
 
 
+    }
+
+    public void addtoCalendarnew(View view) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference newFirebasePreferences = database.getReference("newFirebasePreferences");
+        newFirebasePreferences.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                Log.d("TAG", "Value is: " + value);
+
+                if (value != null) {
+                    int preferredAwakeningHour;
+                    int preferredAwakeningMinute;
+
+                    String[] timeParts = value.split(":");
+                    if (timeParts.length == 2) {
+                        preferredAwakeningHour = Integer.parseInt(timeParts[0]);
+                        preferredAwakeningMinute = Integer.parseInt(timeParts[1]);
+                    } else {
+                        return;
+                    }
+
+                    long eventTimeInMillis = getEventTimeInMillisSuggestion(preferredAwakeningHour, preferredAwakeningMinute);
+                    addToCalendarSuggestion(eventTimeInMillis);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
     }
 
 

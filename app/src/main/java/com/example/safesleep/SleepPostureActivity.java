@@ -171,8 +171,6 @@ public class SleepPostureActivity extends AppCompatActivity {
                                         messagesMap.put(messageKey, messageKey);
                                         DatabaseReference myRef = database.getReference("messages");
                                         myRef.child(messageKey).setValue(messageKey);
-//                                Toast.makeText(SleepPostureActivity.this, "Incomplete pose data", Toast.LENGTH_SHORT).show();
-//                                mediaPlayer = MediaPlayer.create(SleepPostureActivity.this, R.raw.alarm);
 
                                         DatabaseReference lastepisode = database.getReference("lastepisode");
 
