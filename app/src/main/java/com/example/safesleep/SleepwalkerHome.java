@@ -1,6 +1,7 @@
 package com.example.safesleep;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -59,10 +60,46 @@ public class SleepwalkerHome extends AppCompatActivity {
         });
 
         btnTrack.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), SleepPostureActivity.class);
-            startActivity(intent);
-            finish();
+            // Create an AlertDialog.Builder to confirm the action
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Confirm Action");
+            builder.setMessage("Proceed to Sleepwalker Motion?");
+
+            // Set up the positive button action (OK)
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                dialog.dismiss();
+
+                // Create an AlertDialog.Builder to display a countdown
+                AlertDialog.Builder countdownBuilder = new AlertDialog.Builder(this);
+                countdownBuilder.setTitle("Preparing...");
+                countdownBuilder.setMessage("You have 10 seconds to prepare");
+
+                // Create the countdown dialog
+                AlertDialog countdownDialog = countdownBuilder.create();
+                countdownDialog.show();
+
+                // Delay for 10 seconds before proceeding to SleepwalkerActivity
+                new android.os.Handler().postDelayed(() -> {
+                    countdownDialog.dismiss();
+
+                    // Prepare and start the SleepwalkerActivity
+                    Intent intent = new Intent(getApplicationContext(), SleepPostureActivity.class);
+                    startActivity(intent);
+                    finish();
+                }, 10000); // 10 seconds delay
+            });
+
+            // Set up the negative button action (Cancel)
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                dialog.dismiss();
+            });
+
+            // Create and display the main confirmation alert
+            AlertDialog alert = builder.create();
+            alert.show();
         });
+
+
 
         // Firebase Database options
         FirebaseDatabase database = FirebaseDatabase.getInstance();

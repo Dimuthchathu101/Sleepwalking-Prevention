@@ -43,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".SleepPostureActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".DoctorSuggestions"
             android:exported="false" />

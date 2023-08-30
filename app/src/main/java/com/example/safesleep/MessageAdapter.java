@@ -1,5 +1,4 @@
 package com.example.safesleep;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DataModel dataModel = dataList.get(position);
+        // Get the DataModel by counting from the end of the list
+        DataModel dataModel = dataList.get(dataList.size() - position - 1);
         holder.keyTextView.setText(dataModel.getKey());
         holder.valueTextView.setText(dataModel.getValue());
     }
