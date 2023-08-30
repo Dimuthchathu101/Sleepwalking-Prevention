@@ -143,6 +143,7 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:gravity="center"
+        android:visibility="gone"
         android:id="@+id/suggestioncurrentwalk"
         />
     <TextView
@@ -153,6 +154,7 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:gravity="center"
+        android:visibility="gone"
         android:id="@+id/suggestedcurrentrecomendations"
         />
 
@@ -166,6 +168,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"
+
 
         />
 

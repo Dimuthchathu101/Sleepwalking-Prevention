@@ -9,8 +9,6 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".DoctorHomeActivity"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="10dp"
     android:background="@color/purple_200"
     >
 
@@ -18,9 +16,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        app:cardElevation="20dp"
+        app:cardElevation="10dp"
         android:background="@drawable/custom_edittext">
 
         <LinearLayout
@@ -43,7 +41,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:id="@+id/suggestion01"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
@@ -51,11 +49,11 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:id="@+id/suggestion02"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
@@ -63,7 +61,7 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -72,9 +70,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
-        app:cardElevation="20dp"
+        app:cardElevation="10dp"
         android:background="@drawable/custom_edittext">
 
         <LinearLayout
@@ -97,7 +95,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:id="@+id/suggestion03"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
@@ -105,11 +103,11 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:id="@+id/suggestion04"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
@@ -117,7 +115,7 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -128,7 +126,7 @@
         android:id="@+id/doctorRecords"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:text="Records"
         android:textSize="18sp"
         android:backgroundTint="@color/light_blue"
@@ -139,7 +137,7 @@
         android:id="@+id/doctorPatients"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:text="Patients"
         android:textSize="18sp"
         android:backgroundTint="@color/light_blue"
@@ -150,7 +148,7 @@
         android:id="@+id/doctorSuggestions"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:text="Suggestions"
         android:textSize="18sp"
         android:backgroundTint="@color/light_blue"
