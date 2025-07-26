@@ -1,5 +1,80 @@
 # 💤 Sleepwalking-Prevention Project & Appium Test Suite
 
+## 📁 Project Folder Structure
+
+Below is a detailed explanation of the folder structure and what each part is for:
+
+---
+
+### Project Root
+- **README.md**: Project and test suite documentation.
+- **build.gradle, settings.gradle, gradle.properties, gradlew, gradlew.bat, gradle/**: Standard Gradle build system files for building and managing the project.
+- **tests/**: Contains Appium-based automated UI tests for your Android app.
+- **app/**: The main Android application module.
+- **Daily Diary.docx/pdf, Finalized Topic, Gantt Chart.xlsx**: Project documentation and planning files.
+- **.gitignore, .git/**: Git version control files and configuration.
+- **.idea/**: IDE (Android Studio/IntelliJ) project settings.
+
+---
+
+### app/ (Android App Module)
+- **build.gradle, proguard-rules.pro, google-services.json**: App-specific build config, ProGuard rules for code shrinking, and Firebase/Google services config.
+- **libs/**: Third-party libraries (e.g., `weka.jar` for machine learning).
+- **src/**: Main source code and resources.
+
+---
+
+#### app/src/ (Source Sets)
+- **main/**: The main application code and resources.
+- **test/**: Unit tests (Java, not Android-specific).
+- **androidTest/**: Instrumented tests (run on Android device/emulator).
+
+---
+
+##### app/src/main/
+- **AndroidManifest.xml**: Declares app components, permissions, and configuration.
+- **java/com/example/safesleep/**: All Java source code for Activities, services, data models, and business logic.
+- **res/**: App resources (UI layouts, images, strings, colors, etc.).
+- **ic_launcher-playstore.png**: App icon for Play Store.
+
+---
+
+##### app/src/main/java/com/example/safesleep/
+- **Activities**: Each `*Activity.java` file represents a screen (UI) in the app (e.g., `MainActivity`, `AutomaticCallActivity`, `SleepwalkerHome`).
+- **Services**: E.g., `SensorMonitoringService.java` for background sensor monitoring.
+- **Data & Logic**: E.g., `DataModel.java`, `Doctors.java`, `CollaborativeFiltering.java` for app logic and data handling.
+- **Adapters**: E.g., `MessageAdapter.java`, `MyAdapter.java` for RecyclerViews or ListViews.
+- **Receivers**: E.g., `AlarmReceiver.java`, `StartMonitoringReceiver.java` for handling system or app events.
+- **Other**: Utility and helper classes.
+
+---
+
+##### app/src/main/res/ (Resources)
+- **layout/**: XML files defining the UI for each Activity and custom views (e.g., `activity_main.xml`, `activity_automatic_call.xml`).
+- **drawable/**: Images and shape resources (e.g., icons, backgrounds, JPEG/PNG files, XML shapes).
+- **mipmap-***/: Launcher icons for different screen densities.
+- **values/**: App-wide resources like `strings.xml` (text), `colors.xml`, and `themes.xml` (styling).
+- **xml/**: Miscellaneous XML resources (e.g., backup rules).
+- **raw/**: Audio or other raw files (e.g., `alarm.mp3`).
+- **values-night/**: Night mode themes.
+
+---
+
+##### app/libs/
+- **weka.jar**: A machine learning library used for sleep analysis or classification.
+
+---
+
+##### app/src/test/ and app/src/androidTest/
+- **java/com/example/safesleep/**: Java test files for unit and instrumented tests, respectively.
+
+---
+
+##### tests/
+- **Appium Test Files**: Each Activity has a corresponding Appium test file (e.g., `MainActivityAppiumTest.java`), plus a `README.md` for test setup and usage.
+
+---
+
 ## 🌙 Project Overview
 **Sleepwalking-Prevention** is an Android application designed to help users and caregivers monitor, analyze, and prevent sleepwalking incidents. The app leverages sensors, user preferences, and doctor collaboration to provide a comprehensive solution for sleep safety.
 
